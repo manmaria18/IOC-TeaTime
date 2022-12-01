@@ -5,7 +5,7 @@ import com.example.iocteatime.domain.User;
 import java.util.List;
 
 public interface IRepositoryUser {
-    User getUser();
+    User getUser(String username);
 
     List<User> getAllUsers();
 

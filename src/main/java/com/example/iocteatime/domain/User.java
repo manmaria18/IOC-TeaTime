@@ -5,9 +5,9 @@ import java.util.List;
 public class User {
     private String username;
     private String password;
-    private List<Event> events;
+    private List<Integer> events;
 
-    public User(String username, String password, List<Event> events) {
+    public User(String username, String password, List<Integer> events) {
         this.username = username;
         this.password = password;
         this.events = events;
@@ -29,11 +29,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Event> getEvents(String username) {
+    public List<Integer> getEvents(String username) {
         return events;
     }
 
-    public void setEvents(List<Event> events) {
+    public void setEvents(List<Integer> events) {
         this.events = events;
     }
 
