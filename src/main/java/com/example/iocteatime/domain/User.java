@@ -7,6 +7,8 @@ public class User {
     private String password;
     private List<Integer> events;
 
+    //private String status;
+
     public User(String username, String password, List<Integer> events) {
         this.username = username;
         this.password = password;

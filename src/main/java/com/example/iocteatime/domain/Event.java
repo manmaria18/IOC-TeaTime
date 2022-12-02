@@ -1,5 +1,6 @@
 package com.example.iocteatime.domain;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
