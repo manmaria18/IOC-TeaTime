@@ -9,4 +9,6 @@ module com.example.iocteatime {
 
     opens com.example.iocteatime to javafx.fxml;
     exports com.example.iocteatime;
+    exports com.example.iocteatime.controllersGUI;
+    opens com.example.iocteatime.controllersGUI to javafx.fxml;
 }

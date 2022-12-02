@@ -10,7 +10,7 @@
 
 
 <?import javafx.scene.image.Image?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="825.0" style="-fx-background-color: #97a7fc; -fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="825.0" style="-fx-background-color: #97a7fc; -fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iocteatime.controllersGUI.HelloController">
    <children>
       <Label layoutX="285.0" layoutY="194.0" prefHeight="67.0" prefWidth="321.0" text="LOGIN" textFill="#000031">
          <font>

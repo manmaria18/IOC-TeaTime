@@ -1,4 +1,4 @@
-package com.example.iocteatime;
+package com.example.iocteatime.controllersGUI;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
