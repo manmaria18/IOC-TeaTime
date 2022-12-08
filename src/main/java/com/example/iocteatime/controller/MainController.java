@@ -19,11 +19,11 @@ public class MainController {
     }
 
     /*     Calls to ServiceUser   */
-    User getUser(String username){
+   public  User getUser(String username){
         return serviceUsers.getUser(username);
     }
 
-    List<User> getUsers(){
+   public  List<User> getUsers(){
         return serviceUsers.getUsers();
     }
 
@@ -35,15 +35,15 @@ public class MainController {
 
     /*     Calls to ServiceEvents   */
 
-    List<Event> getEventsByName(String name) throws SQLException {
+   public List<Event> getEventsByName(String name) throws SQLException {
         return serviceEvents.getEventsByName(name);
     }
 
-    List<Event> getAllEvents(){
+   public List<Event> getAllEvents(){
         return serviceEvents.getAllEvents();
     }
 
-    List<Event> getAllEventsOfAGivenUser(String username){
+   public List<Event> getAllEventsOfAGivenUser(String username){
         return serviceEvents.getAllEventsOfAGivenUser(username);
     }
 
@@ -55,4 +55,7 @@ public class MainController {
         serviceEvents.updateEvent(id,name,description,location,dateTime,imgURL,guests);
     }
 
+    public void Initialize() {
+
+    }
 }

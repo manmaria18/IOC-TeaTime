@@ -10,7 +10,7 @@ import java.io.IOException;
 public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("/Login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("C:\\Mara\\materiale facultate\\An3\\SEM1\\IOC\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 800, 650);
         stage.setTitle("Hello!");
         stage.setScene(scene);
