@@ -58,6 +58,9 @@ public class EventController {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Empty fields!", new ButtonType[0]);
             alert.show();
         }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Event succesfully created!", new ButtonType[0]);
+        alert.show();
     }
 
     public void handleGoBack(ActionEvent actionEvent) throws IOException {

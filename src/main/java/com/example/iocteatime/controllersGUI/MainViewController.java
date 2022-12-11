@@ -52,7 +52,7 @@ public class MainViewController {
                 } else {
                     HBox hBox = new HBox();
                     hBox.setAlignment(Pos.CENTER);
-                    hBox.setStyle("-fx-background-color:  #97a7fc");
+                    hBox.setStyle("-fx-background-color:  #97a7fc;"+"-fx-max-height: 50;");
                     hBox.setSpacing(5);
                     hBox.setPadding(new Insets(5,5,5,5));
                     VBox vbox = new VBox();
@@ -60,6 +60,9 @@ public class MainViewController {
                     Label description= new Label();
                     Label location= new Label();
                     Label dateTime= new Label();
+                    Button join = new Button();
+                    join.setText("JOIN");
+                    join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
                     title.setText("Title : " + event.getName());
                     description.setText("Description : " + event.getDescription());
                     location.setText("Location : " + event.getLocation());
@@ -80,6 +83,7 @@ public class MainViewController {
                     vbox.getChildren().add(description);
                     vbox.getChildren().add(location);
                     vbox.getChildren().add(dateTime);
+                    vbox.getChildren().add(join);
                     imageView.setImage(new Image(event.getImgURL()));
                     setGraphic(hBox);
                 }

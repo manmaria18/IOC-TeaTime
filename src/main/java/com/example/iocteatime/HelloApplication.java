@@ -20,6 +20,11 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class HelloApplication extends Application {
+    String mariaBdConfigPath="C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\bd.config.properties";
+    String aygeanBdConfigPath="C:\\IOC-TeaTime\\bd.config.properties";
+    String maraBdConfigPath="C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\bd.config.properties";
+
+
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Login.fxml"));
@@ -29,7 +34,7 @@ public class HelloApplication extends Application {
         Properties props = new Properties();
 
         try {
-            props.load(new FileReader("C:\\IOC-TeaTime\\bd.config.properties"));
+            props.load(new FileReader(mariaBdConfigPath));
         } catch (Exception var13) {
             System.out.println(var13);
         }
