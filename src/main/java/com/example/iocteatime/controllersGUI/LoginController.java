@@ -76,7 +76,7 @@ public class LoginController {
     }
 
     public void showMainView() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("C:\\Mara\\materiale facultate\\An3\\SEM1\\IOC\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\MainView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/MainView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);

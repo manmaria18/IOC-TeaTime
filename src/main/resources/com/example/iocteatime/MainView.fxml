@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="898.0" style="-fx-background-color: #97a7fc; -fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="898.0" style="-fx-background-color: #97a7fc; -fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iocteatime.controllersGUI.MainViewController">
    <children>
       <Label layoutX="77.0" layoutY="33.0" prefHeight="66.0" prefWidth="279.0" text="Tea-Time" textFill="#000031">
          <font>

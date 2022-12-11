@@ -13,23 +13,21 @@
 <?import javafx.scene.image.Image?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="825.0" style="-fx-background-color: #97a7fc; -fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iocteatime.controllersGUI.LoginController">
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="825.0" style="-fx-background-color: #97a7fc; -fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
-
    <children>
       <Label layoutX="285.0" layoutY="194.0" prefHeight="67.0" prefWidth="321.0" text="LOGIN" textFill="#000031">
          <font>
             <Font name="Castellar" size="64.0" />
          </font>
       </Label>
-      <TextField layoutX="151.0" layoutY="301.0" prefHeight="38.0" prefWidth="243.0" promptText="\@Username" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
-      <PasswordField layoutX="151.0" layoutY="363.0" prefHeight="37.0" prefWidth="243.0" promptText="\@Password" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
+      <TextField fx:id="usernameField" layoutX="151.0" layoutY="301.0" prefHeight="38.0" prefWidth="243.0" promptText="\@Username" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
+      <PasswordField fx:id="passwordField" layoutX="151.0" layoutY="363.0" prefHeight="37.0" prefWidth="243.0" promptText="\@Password" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
       <Button fx:id="logInButton" layoutX="151.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="30.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="LogIn" textFill="#000031">
          <font>
             <Font name="Castellar" size="12.0" />
          </font>
       </Button>
       <ImageView fitHeight="212.0" fitWidth="334.0" layoutX="412.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true" style="-fx-image: https://www.bing.com/images/search?q=meeting%20clip%20art&amp;qs=MM&amp;form=QBIR&amp;sp=2&amp;pq=meeting&amp;sk=MM1&amp;sc=10-7&amp;cvid=91E84A4F6ABA4F63A5C315350F4E1F09&amp;first=1&amp;tsc=ImageHoverTitle;" />
-      <Button fx:id="redirectToRegisterButton" layoutX="293.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleRedirectToRegister" prefHeight="30.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Register" textFill="#000031">
+      <Button fx:id="registerButton" layoutX="293.0" layoutY="432.0" mnemonicParsing="false" onAction="#handleRedirectToRegister" prefHeight="30.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Register" textFill="#000031">
          <font>
             <Font name="Castellar" size="12.0" />
          </font>
