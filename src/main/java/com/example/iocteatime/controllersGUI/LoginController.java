@@ -83,14 +83,25 @@ public class LoginController {
         stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("MainView");
         stage.setScene(new Scene(root1));
-       // MainController mainController = fxmlLoader.getController();
-        //mainController.Initialize();
         MainViewController mainViewController = fxmlLoader.getController();
         mainViewController.Initialise(mainController);
         stage.show();
+        Stage stage2 = (Stage) logInButton.getScene().getWindow();
+        stage2.close();
     }
 
-    public void handleRedirectToRegister(ActionEvent actionEvent) {
-      //todo
+    public void handleRedirectToRegister(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/Register.fxml"));
+        Parent root1 = (Parent)fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("Register");
+        stage.setScene(new Scene(root1));
+        RegisterController registerController = fxmlLoader.getController();
+        registerController.Initialize(mainController);
+        stage.show();
+        Stage stage2 = (Stage) registerButton.getScene().getWindow();
+        stage2.close();
     }
 }

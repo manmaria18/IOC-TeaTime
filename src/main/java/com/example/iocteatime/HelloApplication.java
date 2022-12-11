@@ -29,7 +29,7 @@ public class HelloApplication extends Application {
         Properties props = new Properties();
 
         try {
-            props.load(new FileReader("C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\bd.config.properties"));
+            props.load(new FileReader("C:\\IOC-TeaTime\\bd.config.properties"));
         } catch (Exception var13) {
             System.out.println(var13);
         }

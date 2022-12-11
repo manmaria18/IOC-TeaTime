@@ -8,31 +8,21 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="825.0" style="-fx-background-color: #97a7fc; -fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="825.0" style="-fx-background-color: #97a7fc; -fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iocteatime.controllersGUI.RegisterController">
    <children>
       <Label layoutX="225.0" layoutY="194.0" prefHeight="82.0" prefWidth="382.0" text="REGISTER" textFill="#000031">
          <font>
             <Font name="Castellar" size="64.0" />
          </font>
       </Label>
-      <TextField layoutX="151.0" layoutY="276.0" prefHeight="38.0" prefWidth="243.0" promptText="\@Username" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
-      <PasswordField layoutX="151.0" layoutY="331.0" prefHeight="37.0" prefWidth="243.0" promptText="\@Password" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
-      <Button layoutX="297.0" layoutY="431.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Sign in" textFill="#000031">
-         <font>
-            <Font name="Castellar" size="12.0" />
-         </font>
-      </Button>
+      <TextField fx:id="usernameRegister" layoutX="151.0" layoutY="276.0" prefHeight="38.0" prefWidth="243.0" promptText="\@Username" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
+      <PasswordField fx:id="passwordRegister1" layoutX="151.0" layoutY="331.0" prefHeight="37.0" prefWidth="243.0" promptText="\@Password" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
       <ImageView fitHeight="212.0" fitWidth="334.0" layoutX="412.0" layoutY="295.0" pickOnBounds="true" preserveRatio="true" style="-fx-image: https://www.bing.com/images/search?q=meeting%20clip%20art&amp;qs=MM&amp;form=QBIR&amp;sp=2&amp;pq=meeting&amp;sk=MM1&amp;sc=10-7&amp;cvid=91E84A4F6ABA4F63A5C315350F4E1F09&amp;first=1&amp;tsc=ImageHoverTitle;" />
-      <Button layoutX="151.0" layoutY="431.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Sign up" textFill="#000031">
+      <Button fx:id="registerButton" layoutX="229.0" layoutY="433.0" mnemonicParsing="false" onAction="#handleRegister" prefHeight="30.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Register" textFill="#000031">
          <font>
             <Font name="Castellar" size="12.0" />
          </font>
       </Button>
-      <Label layoutX="257.0" layoutY="438.0" text="or">
-         <font>
-            <Font name="Castellar" size="13.0" />
-         </font>
-      </Label>
-      <PasswordField layoutX="151.0" layoutY="382.0" prefHeight="37.0" prefWidth="243.0" promptText="\@Retype password" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
+      <PasswordField fx:id="passwordRegister2" layoutX="151.0" layoutY="382.0" prefHeight="37.0" prefWidth="243.0" promptText="\@Retype password" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
    </children>
 </AnchorPane>

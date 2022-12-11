@@ -4,6 +4,8 @@ import com.example.iocteatime.domain.Event;
 import com.example.iocteatime.domain.User;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -66,8 +68,11 @@ public class RepositoryEvents implements IRepositoryEvents{
             try (ResultSet rows = ps.executeQuery()) {
                 while (rows.next()) {
                     int id = rows.getInt("id");
+                    String time = rows.getString("dateTime");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    LocalDateTime dateTime = LocalDateTime.parse(time,formatter);
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                            rows.getString("description"), rows.getString("location"), rows.getTimestamp("dateTime").toLocalDateTime(), rows.getString("imgURL"), guests);
+                            rows.getString("description"), rows.getString("location"),dateTime, rows.getString("imgURL"), guests);
                     //employees.add(employee);
                     events.add(event1);
                     //}
@@ -153,13 +158,12 @@ public class RepositoryEvents implements IRepositoryEvents{
     public void addEvent(Event event) {
         Connection con = jdbcUtils.getConnection();
         try(PreparedStatement ps = con.prepareStatement("insert into Events" +
-                "(id,name,description,location,dateTime,imgURL) values (?,?,?,?,?,?)")){
-            ps.setInt(1, event.getId());
-            ps.setString(2, event.getName());
-            ps.setString(3,event.getDescription());
-            ps.setString(4,event.getLocation());
-            ps.setTimestamp(5, Timestamp.valueOf(event.getDateTime()));
-            ps.setString(6,event.getImgURL());
+                "(name,description,location,dateTime,imgURL) values (?,?,?,?,?)")){
+            ps.setString(1, event.getName());
+            ps.setString(2,event.getDescription());
+            ps.setString(3,event.getLocation());
+            ps.setString(4, event.getDateTime().toString().replace("T"," "));
+            ps.setString(5,event.getImgURL());
             int result = ps.executeUpdate();
         } catch (SQLException ex) {
 
