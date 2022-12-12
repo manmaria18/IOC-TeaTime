@@ -5,16 +5,14 @@ import com.example.iocteatime.domain.Event;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -27,6 +25,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
 
 public class MainViewController {
 
@@ -35,6 +35,17 @@ public class MainViewController {
     private MainController mainController;
     @FXML
     ListView<Event> eventListView;
+
+    @FXML
+    TextField searchField;
+    @FXML
+    Button searchButton;
+
+    @FXML
+    RadioButton byEvent;
+    @FXML
+    RadioButton byUser;
+
     ObservableList<Event> events = FXCollections.observableArrayList();
     private final Image IMAGE_RUBY  = new Image("https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo_64x64.png");
     public void Initialise(MainController mainController){
@@ -63,6 +74,18 @@ public class MainViewController {
                     Button join = new Button();
                     join.setText("JOIN");
                     join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
+                    join.setId(String.valueOf(event.getId()));
+                    join.setOnAction(new EventHandler() {
+
+
+                        @Override
+                        public void handle(javafx.event.Event event) {
+                            System.out.println("Hi there! You clicked me!I am lincked to event nr:"+ join.getId());
+                        }
+
+
+
+                    });
                     title.setText("Title : " + event.getName());
                     description.setText("Description : " + event.getDescription());
                     location.setText("Location : " + event.getLocation());
@@ -84,11 +107,23 @@ public class MainViewController {
                     vbox.getChildren().add(location);
                     vbox.getChildren().add(dateTime);
                     vbox.getChildren().add(join);
+                    //Image newImage = new Image(event.getImgURL());
+
                     imageView.setImage(new Image(event.getImgURL()));
+                    imageView.setFitHeight(150.0);
+                    imageView.setFitWidth(250.0);
+                    //imageView.fitHeightProperty();
+                    //imageView.fitHeightProperty();
+                    //imageView.setStyle("-fx-fit-width: 50;"+"-fx-fit-height: 50");
                     setGraphic(hBox);
                 }
             }
         });
+    }
+
+    private void onJoinClick() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"JOIN TRIED",ButtonType.OK);
+        alert.show();
     }
 
     private void initializeEvents() {
@@ -123,5 +158,21 @@ public class MainViewController {
         stage.show();
         Stage stage2 = (Stage) eventPlannerButton.getScene().getWindow();
         stage2.close();
+    }
+
+    public void handleSearchButtonClick(ActionEvent actionEvent) throws SQLException {
+        if(!searchField.getText().equals("")){
+            List<Event> eventsByName = mainController.getEventsByName(searchField.getText());
+            if(eventsByName.size()!=0)
+               events.setAll(eventsByName);
+            else{
+                Alert alert = new Alert(Alert.AlertType.WARNING,"No results found!",ButtonType.OK);
+                alert.show();
+                events.setAll(mainController.getAllEvents());
+            }
+        }else{
+            Alert alert = new Alert(Alert.AlertType.WARNING,"Please insert value for search!",ButtonType.OK);
+            alert.show();
+        }
     }
 }

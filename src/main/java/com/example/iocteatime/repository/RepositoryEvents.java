@@ -29,9 +29,10 @@ public class RepositoryEvents implements IRepositoryEvents{
         try(PreparedStatement ps = con.prepareStatement("select * from Events where name='"+name+"'")) {
             try (ResultSet rows = ps.executeQuery()) {
                 while (rows.next()) {
-                    int id = rows.getInt("id");
+                    //int id = rows.getInt("id");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                            rows.getString("description"), rows.getString("location"), rows.getTimestamp("dateTime").toLocalDateTime(), rows.getString("imgURL"), guests);
+                            rows.getString("description"), rows.getString("location"), LocalDateTime.parse(rows.getString("dateTime"),formatter), rows.getString("imgURL"), guests);
                     //employees.add(employee);
                     events.add(event1);
                     //}

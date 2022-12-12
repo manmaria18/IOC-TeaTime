@@ -8,6 +8,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -32,7 +33,10 @@ public class LoginController {
     private Button registerButton;
 
     @FXML
-    private ImageView imageView;
+    private ImageView imagine= new ImageView();
+
+    Image img = new Image("C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\Images\\tea_time_alice.jpeg");
+
 
     public LoginController() {
     }
@@ -40,6 +44,7 @@ public class LoginController {
     public void Initialize(MainController mainController){
 
         this.mainController  = mainController;
+        this.imagine.setImage(img);
 
     }
 
