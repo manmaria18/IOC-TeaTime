@@ -3,6 +3,7 @@ package com.example.iocteatime.controllersGUI;
 import com.example.iocteatime.controller.MainController;
 import com.example.iocteatime.domain.Event;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,13 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventController {
+
     public TextField titleField;
     public TextField locationField;
     public DatePicker dateField;
     public Button eventButton;
     public TextField descriptionField;
     public Button backButton;
-    public TextField hourField;
+    public TextField startTimeField;
+    public TextField endTimeField;
     public TextArea urlField;
     private MainController mainController;
 
@@ -37,8 +40,8 @@ public class EventController {
         String location=locationField.getText();
         LocalDate date =dateField.getValue();
         String url =urlField.getText();
-        String startTime = hourField.getText();
-        String endTime = hourField.getText();
+        String startTime = startTimeField.getText();
+        String endTime = endTimeField.getText();
         String description = descriptionField.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         //String date2 = formatter.format(date);
@@ -52,7 +55,8 @@ public class EventController {
             locationField.setText("");
             dateField.setValue(LocalDate.now());
             urlField.setText("");
-            hourField.setText("");
+            startTimeField.setText("");
+            endTimeField.setText("");
             descriptionField.setText("");
 
         }else {
