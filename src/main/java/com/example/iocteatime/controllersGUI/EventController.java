@@ -37,16 +37,17 @@ public class EventController {
         String location=locationField.getText();
         LocalDate date =dateField.getValue();
         String url =urlField.getText();
-        String hour = hourField.getText();
+        String startTime = hourField.getText();
+        String endTime = hourField.getText();
         String description = descriptionField.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String date2 = formatter.format(date);
-        String time = date2 + " " + hour;
-        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(time,formatter2);
+        //String date2 = formatter.format(date);
+        //String time = date2 + " " + hour;
+        //DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        //LocalDateTime dateTime = LocalDateTime.parse(time,formatter2);
         List<String> names = new ArrayList<>();
-        if(!(title.equals("")&&location.equals("")&&time.equals("")&&description.equals("")&&url.equals(""))){
-            this.mainController.addEvent(0,title,description,location,dateTime,url,names);
+        if(!(title.equals("")&&location.equals("")&&startTime.equals("")&&endTime.equals("")&&description.equals("")&&url.equals(""))){
+            this.mainController.addEvent(0,title,description,location,date,startTime,endTime,url,names);
             titleField.setText("");
             locationField.setText("");
             dateField.setValue(LocalDate.now());

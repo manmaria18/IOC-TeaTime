@@ -70,7 +70,9 @@ public class MainViewController {
                     Label title = new Label();
                     Label description= new Label();
                     Label location= new Label();
-                    Label dateTime= new Label();
+                    Label date= new Label();
+                    Label startTime = new Label();
+                    Label endTime = new Label();
                     Button join = new Button();
                     join.setText("JOIN");
                     join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
@@ -89,15 +91,18 @@ public class MainViewController {
                     title.setText("Title : " + event.getName());
                     description.setText("Description : " + event.getDescription());
                     location.setText("Location : " + event.getLocation());
-                    dateTime.setText("Date time : " + event.getDateTime());
+                    date.setText("Date: " + event.getDate());
+                    startTime.setText("Starts at:" + event.getStartTime());
+                    endTime.setText("Ends at:" + event.getEndTime());
 
                     //////////
                     hBox.setPadding(new Insets(5));
                     title.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 20");
                     description.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
                     location.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
-                    dateTime.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
-
+                    date.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
+                    startTime.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
+                    endTime.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
                     //////
 
                     hBox.getChildren().add(vbox);
@@ -105,7 +110,9 @@ public class MainViewController {
                     vbox.getChildren().add(title);
                     vbox.getChildren().add(description);
                     vbox.getChildren().add(location);
-                    vbox.getChildren().add(dateTime);
+                    vbox.getChildren().add(date);
+                    vbox.getChildren().add(startTime);
+                    vbox.getChildren().add(endTime);
                     vbox.getChildren().add(join);
                     //Image newImage = new Image(event.getImgURL());
 

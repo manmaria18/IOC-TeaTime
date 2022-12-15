@@ -76,14 +76,15 @@ public class RepositoryEvents implements IRepositoryEvents{
             try (ResultSet rows = ps.executeQuery()) {
                 while (rows.next()) {
                     int id = rows.getInt("id");
-                    String time = rows.getString("dateTime");
+
                     //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
                     //LocalDateTime dateTime = LocalDateTime.parse(time,formatter);
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm HH:mm");
-                    LocalDateTime dateTime = LocalDateTime.parse(rows.getString("dateTime"),formatter);
-                    String[] splittedDateTime= dateTime.toString().split(" ");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    String time = rows.getString("dateTime");
+                    //LocalDateTime dateTime = LocalDateTime.parse(rows.getString("dateTime"),formatter);
+                    String[] splittedDateTime= time.split(" ");
                     String dateAsString = splittedDateTime[0];
-                    LocalDate date = LocalDate.parse(dateAsString);
+                    LocalDate date = LocalDate.parse(dateAsString,formatter);
                     String startTime = splittedDateTime[1];
                     String endTime = splittedDateTime[2];
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
