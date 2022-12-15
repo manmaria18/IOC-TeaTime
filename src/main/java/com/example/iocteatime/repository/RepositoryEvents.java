@@ -4,6 +4,7 @@ import com.example.iocteatime.domain.Event;
 import com.example.iocteatime.domain.User;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -30,9 +31,15 @@ public class RepositoryEvents implements IRepositoryEvents{
             try (ResultSet rows = ps.executeQuery()) {
                 while (rows.next()) {
                     //int id = rows.getInt("id");
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm HH:mm");
+                    LocalDateTime dateTime = LocalDateTime.parse(rows.getString("dateTime"),formatter);
+                    String[] splittedDateTime= dateTime.toString().split(" ");
+                    String dateAsString = splittedDateTime[0];
+                    LocalDate date = LocalDate.parse(dateAsString);
+                    String startTime = splittedDateTime[1];
+                    String endTime = splittedDateTime[2];
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                            rows.getString("description"), rows.getString("location"), LocalDateTime.parse(rows.getString("dateTime"),formatter), rows.getString("imgURL"), guests);
+                            rows.getString("description"), rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), guests);
                     //employees.add(employee);
                     events.add(event1);
                     //}
@@ -70,10 +77,17 @@ public class RepositoryEvents implements IRepositoryEvents{
                 while (rows.next()) {
                     int id = rows.getInt("id");
                     String time = rows.getString("dateTime");
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-                    LocalDateTime dateTime = LocalDateTime.parse(time,formatter);
+                    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    //LocalDateTime dateTime = LocalDateTime.parse(time,formatter);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm HH:mm");
+                    LocalDateTime dateTime = LocalDateTime.parse(rows.getString("dateTime"),formatter);
+                    String[] splittedDateTime= dateTime.toString().split(" ");
+                    String dateAsString = splittedDateTime[0];
+                    LocalDate date = LocalDate.parse(dateAsString);
+                    String startTime = splittedDateTime[1];
+                    String endTime = splittedDateTime[2];
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                            rows.getString("description"), rows.getString("location"),dateTime, rows.getString("imgURL"), guests);
+                            rows.getString("description"),rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), guests);
                     //employees.add(employee);
                     events.add(event1);
                     //}
@@ -124,8 +138,15 @@ public class RepositoryEvents implements IRepositoryEvents{
                 try (ResultSet rows = ps.executeQuery()) {
                     while (rows.next()) {
                         int id = rows.getInt("id");
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm HH:mm");
+                        LocalDateTime dateTime = LocalDateTime.parse(rows.getString("dateTime"),formatter);
+                        String[] splittedDateTime= dateTime.toString().split(" ");
+                        String dateAsString = splittedDateTime[0];
+                        LocalDate date = LocalDate.parse(dateAsString);
+                        String startTime = splittedDateTime[1];
+                        String endTime = splittedDateTime[2];
                         Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                                rows.getString("description"), rows.getString("location"), rows.getTimestamp("dateTime").toLocalDateTime(), rows.getString("imgURL"), guests);
+                                rows.getString("description"), rows.getString("location"),date, startTime,endTime, rows.getString("imgURL"), guests);
                         //employees.add(employee);
                         events.add(event1);
                         //}
@@ -163,7 +184,7 @@ public class RepositoryEvents implements IRepositoryEvents{
             ps.setString(1, event.getName());
             ps.setString(2,event.getDescription());
             ps.setString(3,event.getLocation());
-            ps.setString(4, event.getDateTime().toString().replace("T"," "));
+            ps.setString(4, event.getDate().toString().replace("T"," ") + " " + event.getStartTime() + " " + event.getEndTime());
             ps.setString(5,event.getImgURL());
             int result = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -176,7 +197,7 @@ public class RepositoryEvents implements IRepositoryEvents{
     public void updateEvent(Event event) {
 
         Connection con = jdbcUtils.getConnection();
-        try(PreparedStatement ps = con.prepareStatement("update Events set name='" +event.getName() + "', description='" +event.getDescription()+ "', location='" +event.getLocation()+"', dateTime='"+event.getDateTime()+"', imgURL='"+event.getImgURL()+"'where id='"+event.getId()+"'")){
+        try(PreparedStatement ps = con.prepareStatement("update Events set name='" +event.getName() + "', description='" +event.getDescription()+ "', location='" +event.getLocation()+"', dateTime='"+event.getDate()+ " " + event.getStartTime() + " " + event.getEndTime() +"', imgURL='"+event.getImgURL()+"'where id='"+event.getId()+"'")){
                 //ps.setString(1, utilizator.getIdUtilizator());
                 //ps.setString(2, utilizator.getNume());
                 //ps.setString(3, utilizator.getStatus());

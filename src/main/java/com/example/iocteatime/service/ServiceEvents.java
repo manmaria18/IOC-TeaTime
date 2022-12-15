@@ -4,6 +4,7 @@ import com.example.iocteatime.domain.Event;
 import com.example.iocteatime.repository.RepositoryEvents;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,14 +33,14 @@ public class ServiceEvents implements IServiceEvents{
     }
 
     @Override
-    public void addEvent(int id, String name, String description, String location, LocalDateTime dateTime, String imgURL, List<String> guests) {
-        Event newEvent = new Event(id,name,description,location,dateTime,imgURL,guests);
+    public void addEvent(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests) {
+        Event newEvent = new Event(id,name,description,location,date,startTime,endTime,imgURL,guests);
         repoEvents.addEvent(newEvent);
     }
 
     @Override
-    public void updateEvent(int id, String name, String description, String location, LocalDateTime dateTime, String imgURL, List<String> guests) {
-        Event toUpdateEvent = new Event(id,name,description,location,dateTime,imgURL,guests);
+    public void updateEvent(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests) {
+        Event toUpdateEvent = new Event(id,name,description,location,date,startTime,endTime,imgURL,guests);
         repoEvents.updateEvent(toUpdateEvent);
     }
 }
