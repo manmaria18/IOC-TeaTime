@@ -210,4 +210,50 @@ public class RepositoryEvents implements IRepositoryEvents{
         }
 
     }
+
+    @Override
+    public List<Event> getEventsByDate(String date) {
+
+        List<Event> events = new ArrayList<>();
+        Connection con = jdbcUtils.getConnection();
+        List<String> guests  = new ArrayList<>();
+        try(PreparedStatement ps = con.prepareStatement("select * from Events where dateTime='"+date+"'")) {
+            try (ResultSet rows = ps.executeQuery()) {
+                while (rows.next()) {
+                    //int id = rows.getInt("id");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm HH:mm");
+                    LocalDateTime dateTime = LocalDateTime.parse(rows.getString("dateTime"),formatter);
+                    String[] splittedDateTime= dateTime.toString().split(" ");
+                    String dateAsString = splittedDateTime[0];
+                    LocalDate date1 = LocalDate.parse(dateAsString);
+                    String startTime = splittedDateTime[1];
+                    String endTime = splittedDateTime[2];
+                    Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
+                            rows.getString("description"), rows.getString("location"),date1,startTime,endTime, rows.getString("imgURL"), guests);
+                    //employees.add(employee);
+                    events.add(event1);
+                    //}
+                }
+            }
+        }catch (SQLException ex) {
+
+            System.err.println("Error DB"+ex);
+        }
+        for(Event event : events){
+            try(PreparedStatement ps =con.prepareStatement("select username from Guests where id='"+event.getId()+"'")){
+                try(ResultSet rows = ps.executeQuery()){
+                    // int i=0;
+                    while(rows.next()){
+                        // eventList.get(i) = rows.getInt("id");
+                        String username = rows.getString("username");
+                        guests.add(username);
+                    }
+                }
+            }catch (SQLException ex){
+                System.err.println("Error DB"+ex);
+            }
+            event.setGuests(guests);
+        }
+        return events;
+    }
 }

@@ -42,9 +42,9 @@ public class MainViewController {
     Button searchButton;
 
     @FXML
-    RadioButton byEvent;
+    CheckBox ByName;
     @FXML
-    RadioButton byUser;
+    CheckBox ByDate;
 
     ObservableList<Event> events = FXCollections.observableArrayList();
     private final Image IMAGE_RUBY  = new Image("https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo_64x64.png");
@@ -168,18 +168,37 @@ public class MainViewController {
     }
 
     public void handleSearchButtonClick(ActionEvent actionEvent) throws SQLException {
-        if(!searchField.getText().equals("")){
-            List<Event> eventsByName = mainController.getEventsByName(searchField.getText());
-            if(eventsByName.size()!=0)
-               events.setAll(eventsByName);
-            else{
-                Alert alert = new Alert(Alert.AlertType.WARNING,"No results found!",ButtonType.OK);
+        if (ByName.isSelected()) {
+            if (!searchField.getText().equals("")) {
+                List<Event> eventsByName = mainController.getEventsByName(searchField.getText());
+                if (eventsByName.size() != 0)
+                    events.setAll(eventsByName);
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "No results found!", ButtonType.OK);
+                    alert.show();
+                    events.setAll(mainController.getAllEvents());
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please insert value for search!", ButtonType.OK);
                 alert.show();
-                events.setAll(mainController.getAllEvents());
             }
-        }else{
-            Alert alert = new Alert(Alert.AlertType.WARNING,"Please insert value for search!",ButtonType.OK);
-            alert.show();
+        }
+        else if(ByDate.isSelected()){
+            if (!searchField.getText().equals("")) {
+                List<Event> eventsByName = mainController.getEventsByDate(searchField.getText());
+                if (eventsByName.size() != 0)
+                    events.setAll(eventsByName);
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "No results found!", ButtonType.OK);
+                    alert.show();
+                    events.setAll(mainController.getAllEvents());
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please insert value for search!", ButtonType.OK);
+                alert.show();
+            }
         }
     }
+
+
 }

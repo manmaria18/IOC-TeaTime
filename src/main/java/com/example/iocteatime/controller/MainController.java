@@ -59,4 +59,8 @@ public class MainController {
     public void Initialize() {
 
     }
+
+    public List<Event> getEventsByDate(String text) {
+       return serviceEvents.getEventsByDate(text);
+    }
 }

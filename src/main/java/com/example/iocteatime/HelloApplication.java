@@ -22,7 +22,7 @@ import java.util.Properties;
 public class HelloApplication extends Application {
     String mariaBdConfigPath="C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\bd.config.properties";
     String aygeanBdConfigPath="C:\\IOC-TeaTime\\bd.config.properties";
-    String maraBdConfigPath="C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\bd.config.properties";
+    String maraBdConfigPath="C:\\Mara\\materiale facultate\\An3\\SEM1\\IOC\\IOC-TeaTime\\bd.config.properties";
 
 
     @Override

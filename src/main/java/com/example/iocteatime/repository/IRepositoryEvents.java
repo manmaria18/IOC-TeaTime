@@ -12,6 +12,8 @@ public interface IRepositoryEvents {
 
     List<Event> getAllEventsOfAGivenUser(String username);
 
+    List<Event> getEventsByDate(String date);
+
     void addEvent(Event event);
 
     void updateEvent(Event event);

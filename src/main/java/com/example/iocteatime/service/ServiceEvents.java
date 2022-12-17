@@ -33,6 +33,11 @@ public class ServiceEvents implements IServiceEvents{
     }
 
     @Override
+    public List<Event> getEventsByDate(String date) {
+       return repoEvents.getEventsByDate(date);
+    }
+
+    @Override
     public void addEvent(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests) {
         Event newEvent = new Event(id,name,description,location,date,startTime,endTime,imgURL,guests);
         repoEvents.addEvent(newEvent);
@@ -43,4 +48,6 @@ public class ServiceEvents implements IServiceEvents{
         Event toUpdateEvent = new Event(id,name,description,location,date,startTime,endTime,imgURL,guests);
         repoEvents.updateEvent(toUpdateEvent);
     }
+
+
 }
