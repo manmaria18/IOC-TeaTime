@@ -31,14 +31,36 @@ public class EventController {
     public TextField startTimeField;
     public TextField endTimeField;
     public TextArea urlField;
+    public TextField maxNrOfAttendantsField;
+    public ComboBox typeOfEventCombo;
+    public Button eventButton2;
     private MainController mainController;
 
     private TextField eventTypeField;
     private TextField nrMaxOfAttendersField;
-    private User loggedInUser;
+    private User currentUser;
+    private Event currentEvent;
 
-    public void Initialize(MainController mainController){
+    public void Initialize(MainController mainController,Event currentEvent,User currentUser){
+        typeOfEventCombo.getItems().addAll("Private","Public");
         this.mainController  = mainController;
+        this.currentEvent=currentEvent;
+        this.currentUser = currentUser;
+        if(currentEvent!=null){
+            titleField.setText(this.currentEvent.getName());
+            locationField.setText(this.currentEvent.getLocation());
+            dateField.setValue(this.currentEvent.getDate());
+            urlField.setText(this.currentEvent.getImgURL());
+            startTimeField.setText(this.currentEvent.getStartTime());
+            endTimeField.setText(this.currentEvent.getEndTime());
+            descriptionField.setText(this.currentEvent.getDescription());
+            typeOfEventCombo.setValue(this.currentEvent.getEventType());
+            if(this.currentEvent.getEventType().equals("Public")){
+                maxNrOfAttendantsField.setText("No limit!");
+            }else{
+                maxNrOfAttendantsField.setText(this.currentEvent.getMaxNumberOfAttenders()+"");
+            }
+        }
     }
     public void handleAdd(ActionEvent actionEvent) throws IOException {
         String title=titleField.getText();
@@ -49,18 +71,14 @@ public class EventController {
         String endTime = endTimeField.getText();
         String description = descriptionField.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String eventType = eventTypeField.getText();
-        String admin = loggedInUser.getUsername();
+        String eventType = typeOfEventCombo.getValue().toString();
+        String admin = currentUser.getUsername();
         int maxNr;
         if(eventType.equals("Public")){
             maxNr= Integer.MAX_VALUE;
         }else{
             maxNr= Integer.valueOf(maxNrOfAttendantsField.getText());
         }
-        //String date2 = formatter.format(date);
-        //String time = date2 + " " + hour;
-        //DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        //LocalDateTime dateTime = LocalDateTime.parse(time,formatter2);
         List<String> names = new ArrayList<>();
         if(!(title.equals("")&&location.equals("")&&startTime.equals("")&&endTime.equals("")&&description.equals("")&&url.equals(""))){
             this.mainController.addEvent(0,title,description,location,date,startTime,endTime,url,names,maxNr,eventType,admin);
@@ -71,7 +89,7 @@ public class EventController {
             startTimeField.setText("");
             endTimeField.setText("");
             descriptionField.setText("");
-
+            maxNrOfAttendantsField.setText("");
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Empty fields!", new ButtonType[0]);
             alert.show();
@@ -90,9 +108,46 @@ public class EventController {
         stage.setTitle("MainView");
         stage.setScene(new Scene(root1));
         MainViewController mainViewController = fxmlLoader.getController();
-        mainViewController.Initialise(mainController);
+        mainViewController.Initialise(mainController,currentUser);
         stage.show();
         Stage stage2 = (Stage) backButton.getScene().getWindow();
         stage2.close();
+    }
+
+    public void handleUpdate(ActionEvent actionEvent) {
+        String title=titleField.getText();
+        String location=locationField.getText();
+        LocalDate date =dateField.getValue();
+        String url =urlField.getText();
+        String startTime = startTimeField.getText();
+        String endTime = endTimeField.getText();
+        String description = descriptionField.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String eventType = typeOfEventCombo.getValue().toString();
+        String admin = currentUser.getUsername();
+        int maxNr;
+        if(eventType.equals("Public")){
+            maxNr= Integer.MAX_VALUE;
+        }else{
+            maxNr= Integer.valueOf(maxNrOfAttendantsField.getText());
+        }
+        List<String> names = new ArrayList<>();
+        if(!(title.equals("")&&location.equals("")&&startTime.equals("")&&endTime.equals("")&&description.equals("")&&url.equals(""))){
+            this.mainController.updateEvent(currentEvent.getId(),title,description,location,date,startTime,endTime,url,names,maxNr,eventType,admin);
+            titleField.setText("");
+            locationField.setText("");
+            dateField.setValue(LocalDate.now());
+            urlField.setText("");
+            startTimeField.setText("");
+            endTimeField.setText("");
+            descriptionField.setText("");
+            maxNrOfAttendantsField.setText("");
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Empty fields!", new ButtonType[0]);
+            alert.show();
+        }
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Event succesfully created!", new ButtonType[0]);
+        alert.show();
     }
 }

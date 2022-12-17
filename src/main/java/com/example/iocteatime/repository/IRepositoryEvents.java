@@ -1,6 +1,7 @@
 package com.example.iocteatime.repository;
 
 import com.example.iocteatime.domain.Event;
+import com.example.iocteatime.domain.User;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -18,5 +19,13 @@ public interface IRepositoryEvents {
 
     void updateEvent(Event event);
 
+    void deleteEvent(int id);
 
+    Event getEventById(int id);
+
+    List<Event> getEventsByPeriod();
+
+    void joinEvent(Event event, User user);
+
+    void leaveEvent(Event event,User user);
 }

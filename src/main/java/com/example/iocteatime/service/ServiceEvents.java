@@ -1,6 +1,7 @@
 package com.example.iocteatime.service;
 
 import com.example.iocteatime.domain.Event;
+import com.example.iocteatime.domain.User;
 import com.example.iocteatime.repository.RepositoryEvents;
 
 import java.sql.SQLException;
@@ -38,15 +39,38 @@ public class ServiceEvents implements IServiceEvents{
     }
 
     @Override
-    public void addEvent(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests) {
-        Event newEvent = new Event(id,name,description,location,date,startTime,endTime,imgURL,guests);
+    public void addEvent(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests, int maxNumberOfAttenders, String eventType, String admin) {
+        Event newEvent = new Event(id,name,description,location,date,startTime,endTime,imgURL,guests,maxNumberOfAttenders,eventType,admin);
         repoEvents.addEvent(newEvent);
     }
 
     @Override
-    public void updateEvent(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests) {
-        Event toUpdateEvent = new Event(id,name,description,location,date,startTime,endTime,imgURL,guests);
+    public void updateEvent(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests, int maxNumberOfAttenders, String eventType, String admin)  {
+        Event toUpdateEvent = new Event(id,name,description,location,date,startTime,endTime,imgURL,guests,maxNumberOfAttenders,eventType,admin);
         repoEvents.updateEvent(toUpdateEvent);
+    }
+
+    @Override
+    public void deleteEvent(int id) {
+        repoEvents.deleteEvent(id);
+    }
+
+    @Override
+    public void deleteEventsByPeriod() {
+        List<Event> listOfEvents= repoEvents.getEventsByPeriod();
+        for(Event event:listOfEvents){
+            repoEvents.deleteEvent(event.getId());
+        }
+    }
+
+    @Override
+    public void joinEvent(Event event, User user) {
+        repoEvents.joinEvent(event,user);
+    }
+
+    @Override
+    public void leaveEvent(Event event, User user) {
+        repoEvents.leaveEvent(event,user);
     }
 
 

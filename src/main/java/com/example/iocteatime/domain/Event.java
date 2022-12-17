@@ -16,6 +16,9 @@ public class Event {
 
     private List<String> guests;
 
+    public Event() {
+    }
+
     private int maxNumberOfAttenders;
 
     private String eventType;

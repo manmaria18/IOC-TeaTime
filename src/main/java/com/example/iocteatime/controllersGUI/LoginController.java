@@ -35,9 +35,9 @@ public class LoginController {
     @FXML
     private ImageView imagine= new ImageView();
 
-    Image img = new Image("C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\Images\\tea_time_alice.jpeg");
+    Image img = new Image("C:\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\Images\\tea_time_alice.jpeg");
 
-
+    private User currentUser;
     public LoginController() {
     }
 
@@ -45,6 +45,7 @@ public class LoginController {
 
         this.mainController  = mainController;
         this.imagine.setImage(img);
+
 
     }
 
@@ -55,6 +56,7 @@ public class LoginController {
         Alert alert;
 
         User user = this.mainController.getUser(username);
+        this.currentUser = user;
         if(!username.isBlank() && !password.isBlank()){
             if(!user.equals(null)){
                 if(user.getPassword().equals(password)){
@@ -89,7 +91,7 @@ public class LoginController {
         stage.setTitle("MainView");
         stage.setScene(new Scene(root1));
         MainViewController mainViewController = fxmlLoader.getController();
-        mainViewController.Initialise(mainController);
+        mainViewController.Initialise(mainController,currentUser);
         stage.show();
         Stage stage2 = (Stage) logInButton.getScene().getWindow();
         stage2.close();

@@ -2,6 +2,7 @@ package com.example.iocteatime.controllersGUI;
 
 import com.example.iocteatime.controller.MainController;
 import com.example.iocteatime.domain.Event;
+import com.example.iocteatime.domain.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,7 +16,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -26,6 +30,8 @@ import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class MainViewController {
@@ -45,11 +51,13 @@ public class MainViewController {
     CheckBox ByName;
     @FXML
     CheckBox ByDate;
+    private User currentUser;
 
     ObservableList<Event> events = FXCollections.observableArrayList();
     private final Image IMAGE_RUBY  = new Image("https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo_64x64.png");
-    public void Initialise(MainController mainController){
+    public void Initialise(MainController mainController,User currentUser){
         this.mainController = mainController;
+        this.currentUser = currentUser;
         initializeEvents();
         eventListView.setItems(events);
         eventListView.setCellFactory(param -> new ListCell<Event>() {
@@ -119,14 +127,70 @@ public class MainViewController {
                     imageView.setImage(new Image(event.getImgURL()));
                     imageView.setFitHeight(150.0);
                     imageView.setFitWidth(250.0);
-                    //imageView.fitHeightProperty();
-                    //imageView.fitHeightProperty();
-                    //imageView.setStyle("-fx-fit-width: 50;"+"-fx-fit-height: 50");
                     setGraphic(hBox);
                 }
             }
         });
     }
+
+    ///////////////
+/*
+    class XCell extends ListCell<Event> {
+        HBox hbox = new HBox();
+        Label label = new Label("");
+        Pane pane = new Pane();
+        Button button = new Button("");
+        String btntext;
+
+        public XCell(String buttonText, String style) {
+            super();
+            btntext = buttonText;
+            button.setText(buttonText);
+            button.setStyle(style);
+            hbox.setStyle("-fx-alignment: center");
+            hbox.getChildren().addAll(label, pane, button);
+            label.setStyle("-fx-text-fill: #2196f3;");
+            HBox.setHgrow(pane, Priority.ALWAYS);
+            button.setOnAction(e -> {
+                if (buttonText.equals("Join")) {
+
+                    Event selected = getListView().getItems().get(getIndex());
+                    mainController.joinEvent(selected,currentUser);
+                    updateItem(selected, false);
+
+                } else {
+                    Event selected = getListView().getItems().get(getIndex());
+                    mainController.leaveEvent(selected,currentUser);
+                    updateItem(selected, false);
+                }
+            });
+
+        }
+
+        @Override
+        protected void updateItem(Event item, boolean empty) {
+            super.updateItem(item, empty);
+            setText(null);
+            if (empty) {
+                setGraphic(null);
+            } else {
+                if (ChronoUnit.HOURS.between(LocalDateTime.now(), item.getDateTime()) < 0) {
+                    this.button.setText("Can't subscribe");
+                    this.button.setDisable(true);
+                } else {
+                    this.button.setText(btntext);
+                    this.button.setDisable(false);
+                }
+                label.setText(item != null ? item.toString() : "<null>");
+                setGraphic(hbox);
+
+            }
+        }
+    }
+*/
+    ///////////////
+
+
 
     private void onJoinClick() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION,"JOIN TRIED",ButtonType.OK);
@@ -161,7 +225,7 @@ public class MainViewController {
         stage.setTitle("Tea-Time!");
         stage.setScene(new Scene(root1));
         EventController eventController = fxmlLoader.getController();
-        eventController.Initialize(mainController);
+        eventController.Initialize(mainController,null,currentUser);
         stage.show();
         Stage stage2 = (Stage) eventPlannerButton.getScene().getWindow();
         stage2.close();
@@ -201,10 +265,29 @@ public class MainViewController {
     }
 
 
+
+
+
     public void refresh(ActionEvent actionEvent) {
         if(!ByName.isSelected() && !ByDate.isSelected()){
             List<Event> refreshList = mainController.getAllEvents();
             events.setAll(refreshList);
         }
+    }
+
+    public void updateEvent(MouseEvent mouseEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
+        Parent root1 = (Parent)fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("Tea-Time!");
+        stage.setScene(new Scene(root1));
+        EventController eventController = fxmlLoader.getController();
+        Event event = eventListView.getSelectionModel().getSelectedItem();
+        eventController.Initialize(mainController,event,currentUser);
+        stage.show();
+        Stage stage2 = (Stage) eventPlannerButton.getScene().getWindow();
+        stage2.close();
     }
 }

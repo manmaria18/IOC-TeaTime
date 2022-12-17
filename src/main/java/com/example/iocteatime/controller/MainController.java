@@ -14,6 +14,7 @@ public class MainController {
     private ServiceEvents serviceEvents;
     private ServiceUsers serviceUsers;
 
+
     public MainController(ServiceEvents serviceEvents, ServiceUsers serviceUsers) {
         this.serviceEvents = serviceEvents;
         this.serviceUsers = serviceUsers;
@@ -44,20 +45,31 @@ public class MainController {
         return serviceEvents.getAllEvents();
     }
 
+   public void joinEvent(Event event,User user){
+        serviceEvents.joinEvent(event,user);
+    }
+
+   public void leaveEvent(Event event,User user){
+       serviceEvents.leaveEvent(event,user);
+    }
    public List<Event> getAllEventsOfAGivenUser(String username){
         return serviceEvents.getAllEventsOfAGivenUser(username);
     }
 
     public void addEvent(int id, String name, String description, String location, LocalDate date,String startTime, String endTime, String imgURL, List<String> guests, int maxNumberOfAttenders, String eventType, String admin){
-        serviceEvents.addEvent(id,name,description,location,date,startTime,endTime,imgURL,guests);
+        serviceEvents.addEvent(id,name,description,location,date,startTime,endTime,imgURL,guests,maxNumberOfAttenders,eventType,admin);
     }
 
     public void updateEvent(int id, String name, String description, String location, LocalDate date,String startTime, String endTime, String imgURL, List<String> guests, int maxNumberOfAttenders, String eventType, String admin){
-        serviceEvents.updateEvent(id,name,description,location,date,startTime,endTime,imgURL,guests);
+        serviceEvents.updateEvent(id,name,description,location,date,startTime,endTime,imgURL,guests,maxNumberOfAttenders,eventType,admin);
     }
 
     public void Initialize() {
 
+    }
+
+    public void clearEventsByPeriod(){
+       serviceEvents.deleteEventsByPeriod();
     }
 
     public List<Event> getEventsByDate(String text) {

@@ -40,7 +40,7 @@ public class RepositoryEvents implements IRepositoryEvents{
                     String startTime = splittedDateTime[1];
                     String endTime = splittedDateTime[2];
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                            rows.getString("description"), rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), guests);
+                            rows.getString("description"), rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), guests,rows.getInt("maxNumberOfAttenders"),rows.getString("eventType"),rows.getString("admin"));
                     //employees.add(employee);
                     events.add(event1);
                     //}
@@ -70,6 +70,13 @@ public class RepositoryEvents implements IRepositoryEvents{
 
     @Override
     public List<Event> getAllEvents() {
+        //
+        /*List<Event> listOfEvents = getEventsByPeriod();
+        for(Event event:listOfEvents){
+            deleteEvent(event.getId());
+        }*/
+
+        //
         List<Event> events = new ArrayList<>();
         Connection con = jdbcUtils.getConnection();
         List<String> guests  = new ArrayList<>();
@@ -89,7 +96,7 @@ public class RepositoryEvents implements IRepositoryEvents{
                     String startTime = splittedDateTime[1];
                     String endTime = splittedDateTime[2];
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                            rows.getString("description"),rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), guests);
+                            rows.getString("description"),rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), guests,rows.getInt("maxNumberOfAttenders"),rows.getString("eventType"),rows.getString("admin"));
                     //employees.add(employee);
                     events.add(event1);
                     //}
@@ -148,7 +155,7 @@ public class RepositoryEvents implements IRepositoryEvents{
                         String startTime = splittedDateTime[1];
                         String endTime = splittedDateTime[2];
                         Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                                rows.getString("description"), rows.getString("location"),date, startTime,endTime, rows.getString("imgURL"), guests);
+                                rows.getString("description"), rows.getString("location"),date, startTime,endTime, rows.getString("imgURL"), guests,rows.getInt("maxNumberOfAttenders"),rows.getString("eventType"),rows.getString("admin"));
                         //employees.add(employee);
                         events.add(event1);
                         //}
@@ -182,12 +189,15 @@ public class RepositoryEvents implements IRepositoryEvents{
     public void addEvent(Event event) {
         Connection con = jdbcUtils.getConnection();
         try(PreparedStatement ps = con.prepareStatement("insert into Events" +
-                "(name,description,location,dateTime,imgURL) values (?,?,?,?,?)")){
+                "(name,description,location,dateTime,imgURL,maxNumberOfAttenders,eventType,admin) values (?,?,?,?,?,?,?,?)")){
             ps.setString(1, event.getName());
             ps.setString(2,event.getDescription());
             ps.setString(3,event.getLocation());
             ps.setString(4, event.getDate().toString().replace("T"," ") + " " + event.getStartTime() + " " + event.getEndTime());
             ps.setString(5,event.getImgURL());
+            ps.setInt(6,event.getMaxNumberOfAttenders());
+            ps.setString(7,event.getEventType());
+            ps.setString(8,event.getAdmin());
             int result = ps.executeUpdate();
         } catch (SQLException ex) {
 
@@ -199,17 +209,145 @@ public class RepositoryEvents implements IRepositoryEvents{
     public void updateEvent(Event event) {
 
         Connection con = jdbcUtils.getConnection();
-        try(PreparedStatement ps = con.prepareStatement("update Events set name='" +event.getName() + "', description='" +event.getDescription()+ "', location='" +event.getLocation()+"', dateTime='"+event.getDate()+ " " + event.getStartTime() + " " + event.getEndTime() +"', imgURL='"+event.getImgURL()+"'where id='"+event.getId()+"'")){
-                //ps.setString(1, utilizator.getIdUtilizator());
-                //ps.setString(2, utilizator.getNume());
-                //ps.setString(3, utilizator.getStatus());
-                //ps.setString(4, utilizator.getPassword());
+        try(PreparedStatement ps = con.prepareStatement("update Events set name='" +event.getName() +
+                "', description='" +event.getDescription()+
+                "', location='" +event.getLocation()+"', dateTime='"+event.getDate()+ " " +
+                 event.getStartTime() + " " + event.getEndTime() +"', imgURL='"+event.getImgURL()+
+                "', maxNumberOfAttenders='"+event.getMaxNumberOfAttenders()+ " " +
+                "', eventType='"+event.getEventType()+ " " +
+                "', admin='"+event.getAdmin()+ " " +
+                "'where id='"+event.getId()+"'")){
                 ps.executeUpdate();
         } catch (SQLException ex) {
 
                 System.err.println("Error DB"+ex);
         }
 
+    }
+
+    @Override
+    public void deleteEvent(int id) {
+        Connection con = jdbcUtils.getConnection();
+        try(PreparedStatement ps = con.prepareStatement("DELETE FROM Events where id='"+id+"'")){
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println("Error DB"+ex);
+        }
+    }
+
+    @Override
+    public Event getEventById(int id) {
+        Connection con = jdbcUtils.getConnection();
+        List<String> guests = new ArrayList<>();
+        Event event = new Event();
+        try (PreparedStatement ps = con.prepareStatement("select * from Events where id='" + id + "'")) {
+            try (ResultSet rows = ps.executeQuery()) {
+                if (rows.next()) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    String time = rows.getString("dateTime");
+                    String[] splittedDateTime = time.split(" ");
+                    String dateAsString = splittedDateTime[0];
+                    LocalDate date = LocalDate.parse(dateAsString, formatter);
+                    String startTime = splittedDateTime[1];
+                    String endTime = splittedDateTime[2];
+                    event = new Event(id, rows.getString("name"),
+                            rows.getString("description"), rows.getString("location"), date, startTime, endTime, rows.getString("imgURL"), guests, rows.getInt("maxNumberOfAttenders"), rows.getString("eventType"), rows.getString("admin"));
+                }
+            }
+        } catch (SQLException ex) {
+
+            System.err.println("Error DB" + ex);
+        }
+        try (PreparedStatement ps = con.prepareStatement("select username from Guests where id='" + event.getId() + "'")) {
+            try (ResultSet rows = ps.executeQuery()) {
+                while (rows.next()) {
+                    String username = rows.getString("username");
+                    guests.add(username);
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error DB" + ex);
+        }
+        event.setGuests(guests);
+        return event;
+    }
+
+    @Override
+    public List<Event> getEventsByPeriod() {
+        List<Integer> listOfEvents = new ArrayList<>();
+        List<Integer> listOfGuests = new ArrayList<>();
+
+
+        List<Event> events = new ArrayList<>();
+        Connection con = jdbcUtils.getConnection();
+        List<String> guests  = new ArrayList<>();
+        try(PreparedStatement ps = con.prepareStatement("select * from Events")) {
+            try (ResultSet rows = ps.executeQuery()) {
+                while (rows.next()) {
+                    Integer id = rows.getInt("id");
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    String time = rows.getString("dateTime");
+                    String[] splittedDateTime= time.split(" ");
+                    String dateAsString = splittedDateTime[0];
+                    LocalDate date = LocalDate.parse(dateAsString,formatter);
+                    LocalDate dateNow=LocalDate.now();
+                    Integer daysBetween= dateNow.compareTo(date);
+                    if(daysBetween>7){
+                        listOfEvents.add(id);
+                    }
+                }
+            }
+        }catch (SQLException ex) {
+            System.err.println("Error DB"+ex);
+        }
+
+        try(PreparedStatement ps = con.prepareStatement("select id from Guests")) {
+            try (ResultSet rows = ps.executeQuery()) {
+                while (rows.next()) {
+                    Integer id = rows.getInt("id");
+                    listOfGuests.add(id);
+                }
+            }
+        }catch (SQLException ex) {
+            System.err.println("Error DB"+ex);
+        }
+
+        List<Integer> listOfEventsWithoutGuests= new ArrayList<>();
+        for(Integer id: listOfEvents){
+            if(listOfGuests.contains(id)){
+                break;
+            }else{
+                listOfEventsWithoutGuests.add(id);
+            }
+        }
+        for (Integer id :listOfEventsWithoutGuests){
+            events.add(getEventById(id));
+        }
+        return events;
+    }
+
+    @Override
+    public void joinEvent(Event event, User user) {
+        Connection con = jdbcUtils.getConnection();
+        try(PreparedStatement ps = con.prepareStatement("insert into Guests" +
+                "(username,id) values (?,?)")){
+            ps.setString(1, user.getUsername());
+            ps.setInt(2,event.getId());
+            int result = ps.executeUpdate();
+        } catch (SQLException ex) {
+
+            System.err.println("Error DB"+ex);
+        }
+    }
+
+    @Override
+    public void leaveEvent(Event event, User user) {
+        Connection con = jdbcUtils.getConnection();
+        try(PreparedStatement ps = con.prepareStatement("DELETE FROM Guests where username='"+user.getUsername()+"' AND id='"+event.getId()+"'")){
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+            System.err.println("Error DB"+ex);
+        }
     }
 
     @Override
@@ -231,7 +369,7 @@ public class RepositoryEvents implements IRepositoryEvents{
                     String startTime = splittedDateTime[1];
                     String endTime = splittedDateTime[2];
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                            rows.getString("description"), rows.getString("location"),date1,startTime,endTime, rows.getString("imgURL"), guests);
+                            rows.getString("description"), rows.getString("location"),date1,startTime,endTime, rows.getString("imgURL"), guests,rows.getInt("maxNumberOfAttenders"),rows.getString("eventType"),rows.getString("admin"));
                     //employees.add(employee);
                     events.add(event1);
                     //}

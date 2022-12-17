@@ -21,6 +21,7 @@ public class RegisterController {
     public PasswordField passwordRegister2;
     public Button registerButton;
     private MainController mainController;
+    private User currentUser;
 
     public void Initialize(MainController mainController){
         this.mainController  = mainController;
@@ -35,6 +36,7 @@ public class RegisterController {
         if(password1.equals(password2)){
             List<Integer> events = new ArrayList<>();
             this.mainController.addUser(username,password1,events);
+            currentUser = this.mainController.getUser(username);
             this.showMainView();
         } else{
             alert = new Alert(Alert.AlertType.WARNING, "Incorrect password!", new ButtonType[0]);
@@ -51,7 +53,7 @@ public class RegisterController {
         stage.setTitle("MainView");
         stage.setScene(new Scene(root1));
         MainViewController mainViewController = fxmlLoader.getController();
-        mainViewController.Initialise(mainController);
+        mainViewController.Initialise(mainController,currentUser);
         stage.show();
         Stage stage2 = (Stage) registerButton.getScene().getWindow();
         stage2.close();
