@@ -2,6 +2,7 @@ package com.example.iocteatime.controllersGUI;
 
 import com.example.iocteatime.controller.MainController;
 import com.example.iocteatime.domain.Event;
+import com.example.iocteatime.domain.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +33,10 @@ public class EventController {
     public TextArea urlField;
     private MainController mainController;
 
+    private TextField eventTypeField;
+    private TextField nrMaxOfAttendersField;
+    private User loggedInUser;
+
     public void Initialize(MainController mainController){
         this.mainController  = mainController;
     }
@@ -44,13 +49,21 @@ public class EventController {
         String endTime = endTimeField.getText();
         String description = descriptionField.getText();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String eventType = eventTypeField.getText();
+        String admin = loggedInUser.getUsername();
+        int maxNr;
+        if(eventType.equals("Public")){
+            maxNr= Integer.MAX_VALUE;
+        }else{
+            maxNr= Integer.valueOf(maxNrOfAttendantsField.getText());
+        }
         //String date2 = formatter.format(date);
         //String time = date2 + " " + hour;
         //DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         //LocalDateTime dateTime = LocalDateTime.parse(time,formatter2);
         List<String> names = new ArrayList<>();
         if(!(title.equals("")&&location.equals("")&&startTime.equals("")&&endTime.equals("")&&description.equals("")&&url.equals(""))){
-            this.mainController.addEvent(0,title,description,location,date,startTime,endTime,url,names);
+            this.mainController.addEvent(0,title,description,location,date,startTime,endTime,url,names,maxNr,eventType,admin);
             titleField.setText("");
             locationField.setText("");
             dateField.setValue(LocalDate.now());

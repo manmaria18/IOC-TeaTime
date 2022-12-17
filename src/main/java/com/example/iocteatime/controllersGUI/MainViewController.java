@@ -201,4 +201,10 @@ public class MainViewController {
     }
 
 
+    public void refresh(ActionEvent actionEvent) {
+        if(!ByName.isSelected() && !ByDate.isSelected()){
+            List<Event> refreshList = mainController.getAllEvents();
+            events.setAll(refreshList);
+        }
+    }
 }

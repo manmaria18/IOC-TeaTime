@@ -48,11 +48,11 @@ public class MainController {
         return serviceEvents.getAllEventsOfAGivenUser(username);
     }
 
-    public void addEvent(int id, String name, String description, String location, LocalDate date,String startTime, String endTime, String imgURL, List<String> guests){
+    public void addEvent(int id, String name, String description, String location, LocalDate date,String startTime, String endTime, String imgURL, List<String> guests, int maxNumberOfAttenders, String eventType, String admin){
         serviceEvents.addEvent(id,name,description,location,date,startTime,endTime,imgURL,guests);
     }
 
-    public void updateEvent(int id, String name, String description, String location, LocalDate date,String startTime, String endTime, String imgURL, List<String> guests){
+    public void updateEvent(int id, String name, String description, String location, LocalDate date,String startTime, String endTime, String imgURL, List<String> guests, int maxNumberOfAttenders, String eventType, String admin){
         serviceEvents.updateEvent(id,name,description,location,date,startTime,endTime,imgURL,guests);
     }
 

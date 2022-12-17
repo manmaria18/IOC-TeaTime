@@ -16,7 +16,13 @@ public class Event {
 
     private List<String> guests;
 
-    public Event(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests) {
+    private int maxNumberOfAttenders;
+
+    private String eventType;
+
+    private String admin;
+
+    public Event(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests, int max, String eventType, String admin) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,6 +32,9 @@ public class Event {
         this.endTime = endTime;
         this.imgURL = imgURL;
         this.guests = guests;
+        this.eventType = eventType;
+        this.maxNumberOfAttenders = max;
+        this.admin=admin;
     }
 
     public int getId() {
@@ -100,6 +109,30 @@ public class Event {
         this.guests = guests;
     }
 
+    public int getMaxNumberOfAttenders() {
+        return maxNumberOfAttenders;
+    }
+
+    public void setMaxNumberOfAttenders(int maxNumberOfAttenders) {
+        this.maxNumberOfAttenders = maxNumberOfAttenders;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(String admin) {
+        this.admin = admin;
+    }
+
     @Override
     public String toString() {
         return "Event{" +
@@ -111,7 +144,10 @@ public class Event {
                 ", startTime='" + startTime + '\'' +
                 ", endTime='" + endTime + '\'' +
                 ", imgURL='" + imgURL + '\'' +
-                ", guests=" + guests +
+                ", guests=" + guests + '\'' +
+                ", eventType="+ eventType + '\'' +
+                ", maxNumberOfAttenders="+ maxNumberOfAttenders + '\'' +
+                ", admin="+ admin +
                 '}';
     }
 }

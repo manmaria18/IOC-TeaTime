@@ -33,7 +33,7 @@
             <Font name="Castellar" size="12.0" />
          </font>
       </Button>
-      <CheckBox fx:id="ByName" layoutX="375.0" layoutY="99.0" mnemonicParsing="false" text="ByName" />
-      <CheckBox fx:id="ByDate" layoutX="453.0" layoutY="99.0" mnemonicParsing="false" text="ByDateRadioButton" />
+      <CheckBox fx:id="ByName" layoutX="375.0" layoutY="99.0" mnemonicParsing="false" text="ByName" onAction="#refresh" />
+      <CheckBox fx:id="ByDate" layoutX="453.0" layoutY="99.0" mnemonicParsing="false" text="ByDateRadioButton" onAction="#refresh" />
    </children>
 </AnchorPane>
