@@ -23,7 +23,7 @@ public class RepositoryUser implements IRepositoryUser {
     @Override
     public User getUser(String username) {
         Connection con = jdbcUtils.getConnection();
-        User user = null;
+        User user = new User();
         List<Integer> eventList = new ArrayList<>();
         try(PreparedStatement ps = con.prepareStatement("select * from Users where username='"+username+"'")){
             try(ResultSet rows = ps.executeQuery()){
@@ -62,7 +62,7 @@ public class RepositoryUser implements IRepositoryUser {
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
         Connection con = jdbcUtils.getConnection();
-        // User user = null;
+        //User user = null;
         List<Integer> eventList = new ArrayList<>();
         try (PreparedStatement ps = con.prepareStatement("select * from Users")) {
             try (ResultSet rows = ps.executeQuery()) {

@@ -1,6 +1,7 @@
 package com.example.iocteatime.controllersGUI;
 
 import com.example.iocteatime.controller.MainController;
+import com.example.iocteatime.domain.Event;
 import com.example.iocteatime.domain.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,6 +16,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class LoginController {
@@ -35,7 +38,7 @@ public class LoginController {
     @FXML
     private ImageView imagine= new ImageView();
 
-    Image img = new Image("C:\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\Images\\tea_time_alice.jpeg");
+    Image img = new Image("C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\Images\\tea_time_alice.jpeg");
 
     private User currentUser;
     public LoginController() {
@@ -56,9 +59,11 @@ public class LoginController {
         Alert alert;
 
         User user = this.mainController.getUser(username);
+        System.out.println(user.toString());
+        //List<Integer> ev = new ArrayList<>();
         this.currentUser = user;
         if(!username.isBlank() && !password.isBlank()){
-            if(!user.equals(null)){
+            if(user!=null){
                 if(user.getPassword().equals(password)){
                     try {
                         this.showMainView();

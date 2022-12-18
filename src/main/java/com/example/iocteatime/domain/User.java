@@ -15,6 +15,10 @@ public class User {
         this.events = events;
     }
 
+    public User(){
+
+    }
+
     public String getUsername() {
         return username;
     }

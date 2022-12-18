@@ -10,47 +10,53 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="898.0" style="-fx-background-color: #97a7fc; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iocteatime.controllersGUI.MainViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="898.0" style="-fx-background-color: #97a7fc; -fx-border-color: #000031;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.iocteatime.controllersGUI.MainViewController">
    <children>
-      <TabPane prefHeight="684.0" prefWidth="898.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="684.0" prefWidth="898.0" style="-fx-background-repeat: 80; -fx-border-radius: 80;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Events">
+          <Tab style="-fx-background-color: purple; -fx-border-color: #000031; -fx-border-radius: 80; -fx-background-radius: 80;" text="Events">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;">
                      <children>
-                        <Label layoutX="18.0" prefHeight="66.0" prefWidth="279.0" text="Tea-Time" textFill="#000031">
+                        <Label layoutX="23.0" layoutY="7.0" prefHeight="102.0" prefWidth="210.0" text="Tea-Time" textFill="#000031">
                            <font>
                               <Font name="Castellar" size="36.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="searchField" layoutX="246.0" layoutY="17.0" prefHeight="30.0" prefWidth="288.0" promptText=" Search " style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
-                        <Button fx:id="searchButton" layoutX="787.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleSearchButtonClick" prefHeight="30.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Search" textFill="#000031">
+                        <TextField fx:id="searchField" layoutX="232.0" layoutY="37.0" prefHeight="30.0" prefWidth="288.0" promptText=" Search " style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-border-color: #000031;" />
+                        <Button fx:id="searchButton" layoutX="529.0" layoutY="37.0" mnemonicParsing="false" onAction="#handleSearchButtonClick" prefHeight="30.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Search" textFill="#000031">
                            <font>
                               <Font name="Castellar" size="12.0" />
                            </font>
                         </Button>
-                        <Button fx:id="eventPlannerButton" layoutX="33.0" layoutY="610.0" mnemonicParsing="false" onAction="#handleEventPlanner" prefHeight="30.0" prefWidth="161.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Event planner" textFill="#000031">
+                        <ListView fx:id="eventListView" layoutX="35.0" layoutY="109.0" onMouseClicked="#updateEvent" prefHeight="515.0" prefWidth="828.0" style="-fx-background-color: transparent;" styleClass="table-events" stylesheets="@css/style.css" />
+                        <Button fx:id="logoutButton" layoutX="751.0" layoutY="32.0" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="39.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Logout" textFill="#000031">
                            <font>
                               <Font name="Castellar" size="12.0" />
                            </font>
                         </Button>
-                        <ListView fx:id="eventListView" layoutX="29.0" layoutY="70.0" onMouseClicked="#updateEvent" prefHeight="514.0" prefWidth="832.0" style="-fx-background-color: transparent;" styleClass="table-events" stylesheets="@css/style.css" />
-                        <Button fx:id="logoutButton" layoutX="787.0" layoutY="605.0" mnemonicParsing="false" onAction="#handleLogOut" prefHeight="39.0" prefWidth="88.0" style="-fx-background-radius: 80; -fx-border-radius: 80; -fx-background-color: gold; -fx-border-color: #000031;" text="Logout" textFill="#000031">
+                        <CheckBox fx:id="ByName" layoutX="376.0" layoutY="76.0" mnemonicParsing="false" onAction="#refresh" text="ByName">
                            <font>
                               <Font name="Castellar" size="12.0" />
-                           </font>
-                        </Button>
-                        <CheckBox fx:id="ByName" layoutX="699.0" layoutY="23.0" mnemonicParsing="false" onAction="#refresh" text="ByName" />
-                        <CheckBox fx:id="ByDate" layoutX="554.0" layoutY="24.0" mnemonicParsing="false" onAction="#refresh" text="ByDateRadioButton" />
+                           </font></CheckBox>
+                        <CheckBox fx:id="ByDate" layoutX="232.0" layoutY="76.0" mnemonicParsing="false" onAction="#refresh" text="ByDate">
+                           <font>
+                              <Font name="Castellar" size="12.0" />
+                           </font></CheckBox>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="My Events">
+          <Tab style="-fx-background-color: gold; -fx-border-color: #000031; -fx-border-radius: 80; -fx-background-radius: 80;" text="My Events">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
             </content>
           </Tab>
+            <Tab fx:id="eventPlannerSwitch" onSelectionChanged="#handleSwitchToEventPlanner" style="-fx-background-color: aqua; -fx-border-color: #000031; -fx-border-radius: 80; -fx-background-radius: 80;" text="Event planner">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>
