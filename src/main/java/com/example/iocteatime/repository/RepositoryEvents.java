@@ -328,12 +328,12 @@ public class RepositoryEvents implements IRepositoryEvents{
     }
 
     @Override
-    public void joinEvent(Event event, User user) {
+    public void joinEvent(int eventId, String username) {
         Connection con = jdbcUtils.getConnection();
         try(PreparedStatement ps = con.prepareStatement("insert into Guests" +
                 "(username,id) values (?,?)")){
-            ps.setString(1, user.getUsername());
-            ps.setInt(2,event.getId());
+            ps.setString(1, username);
+            ps.setInt(2,eventId);
             int result = ps.executeUpdate();
         } catch (SQLException ex) {
 
@@ -342,9 +342,9 @@ public class RepositoryEvents implements IRepositoryEvents{
     }
 
     @Override
-    public void leaveEvent(Event event, User user) {
+    public void leaveEvent(int eventId, String username) {
         Connection con = jdbcUtils.getConnection();
-        try(PreparedStatement ps = con.prepareStatement("DELETE FROM Guests where username='"+user.getUsername()+"' AND id='"+event.getId()+"'")){
+        try(PreparedStatement ps = con.prepareStatement("DELETE FROM Guests where username='"+username+"' AND id='"+eventId+"'")){
             ps.executeUpdate();
         } catch (SQLException ex) {
             System.err.println("Error DB"+ex);

@@ -64,13 +64,13 @@ public class ServiceEvents implements IServiceEvents{
     }
 
     @Override
-    public void joinEvent(Event event, User user) {
-        repoEvents.joinEvent(event,user);
+    public void joinEvent(int eventId, String username) {
+        repoEvents.joinEvent(eventId,username);
     }
 
     @Override
-    public void leaveEvent(Event event, User user) {
-        repoEvents.leaveEvent(event,user);
+    public void leaveEvent(int eventId, String username) {
+        repoEvents.leaveEvent(eventId, username);
     }
 
 

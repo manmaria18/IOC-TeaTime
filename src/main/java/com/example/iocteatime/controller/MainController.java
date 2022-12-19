@@ -45,12 +45,12 @@ public class MainController {
         return serviceEvents.getAllEvents();
     }
 
-   public void joinEvent(Event event,User user){
-        serviceEvents.joinEvent(event,user);
+   public void joinEvent(int eventId, String username){
+        serviceEvents.joinEvent(eventId,username);
     }
 
-   public void leaveEvent(Event event,User user){
-       serviceEvents.leaveEvent(event,user);
+   public void leaveEvent(int eventId, String username){
+       serviceEvents.leaveEvent(eventId,username);
     }
    public List<Event> getAllEventsOfAGivenUser(String username){
         return serviceEvents.getAllEventsOfAGivenUser(username);

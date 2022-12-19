@@ -85,17 +85,36 @@ public class MainViewController {
                     join.setText("JOIN");
                     join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
                     join.setId(String.valueOf(event.getId()));
-                    join.setOnAction(new EventHandler() {
+                    if(join.getText().equals("JOIN")) {
+                        join.setOnAction(new EventHandler() {
 
 
-                        @Override
-                        public void handle(javafx.event.Event event) {
-                            System.out.println("Hi there! You clicked me!I am lincked to event nr:"+ join.getId());
-                        }
+                            @Override
+                            public void handle(javafx.event.Event event) {
+                                System.out.println("Hi there! You clicked me!I am linked to event nr:" + join.getId());
+                                mainController.joinEvent(Integer.valueOf(join.getId()), currentUser.getUsername());
+                                join.setText("LEAVE");
+
+                            }
 
 
+                        });
+                    }
+                    else{
+                        join.setOnAction(new EventHandler() {
 
-                    });
+
+                            @Override
+                            public void handle(javafx.event.Event event) {
+                                System.out.println("Hi there! You clicked me!I am linked to event nr:" + join.getId());
+                                mainController.leaveEvent(Integer.valueOf(join.getId()), currentUser.getUsername());
+                                join.setText("JOIN");
+
+                            }
+
+
+                        });
+                    }
                     title.setText("Title : " + event.getName());
                     description.setText("Description : " + event.getDescription());
                     location.setText("Location : " + event.getLocation());

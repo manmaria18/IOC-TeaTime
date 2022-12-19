@@ -25,7 +25,7 @@ public interface IRepositoryEvents {
 
     List<Event> getEventsByPeriod();
 
-    void joinEvent(Event event, User user);
+    void joinEvent(int eventId, String username);
 
-    void leaveEvent(Event event,User user);
+    void leaveEvent(int eventId, String username);
 }
