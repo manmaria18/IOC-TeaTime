@@ -145,4 +145,20 @@ public class MyEventsViewController {
 
     public void handleSwitchToEventPlanner(Event event) {
     }
+
+
+    public void switchToEventsView(javafx.event.Event event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/MainView.fxml"));
+        Parent root1 = (Parent)fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("Tea-Time!");
+        stage.setScene(new Scene(root1));
+        MyEventsViewController eventController = fxmlLoader.getController();
+        eventController.Initialise(mainController,currentUser);
+        stage.show();
+        Stage stage2 = (Stage) searchField1.getScene().getWindow();
+        stage2.close();
+    }
 }

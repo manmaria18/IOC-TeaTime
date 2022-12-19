@@ -302,7 +302,27 @@ public class MainViewController {
         EventController eventController = fxmlLoader.getController();
         eventController.Initialize(mainController,null,currentUser);
         stage.show();
-        Stage stage2 = (Stage) eventPlannerButton.getScene().getWindow();
+        Stage stage2 = (Stage) searchField.getScene().getWindow();
+        stage2.close();
+    }
+
+
+    public void handleSwitchToMyEvents(javafx.event.Event event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/MyEventsView.fxml"));
+        Parent root1 = (Parent)fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("Tea-Time!");
+        stage.setScene(new Scene(root1));
+        MyEventsViewController eventController = fxmlLoader.getController();
+        eventController.Initialise(mainController,currentUser);
+        stage.show();
+        Stage stage2 = (Stage) searchField.getScene().getWindow();
         stage2.close();
     }
 }
+
+
+
+
