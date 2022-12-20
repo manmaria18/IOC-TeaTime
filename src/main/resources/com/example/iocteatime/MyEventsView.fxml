@@ -14,7 +14,7 @@
    <children>
       <TabPane prefHeight="684.0" prefWidth="898.0" style="-fx-background-repeat: 80; -fx-border-radius: 80;" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="MyEventView" onSelectionChanged="#switchToEvents" style="-fx-background-color: cc80db; -fx-border-color: #000031; -fx-border-radius: 80; -fx-background-radius: 80;" text="My Events">
+          <Tab fx:id="MyEventView"  style="-fx-background-color: cc80db; -fx-border-color: #000031; -fx-border-radius: 80; -fx-background-radius: 80;" text="My Events">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>

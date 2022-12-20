@@ -17,7 +17,6 @@ public interface IServiceEvents {
     void updateEvent(int id, String name, String description, String location, LocalDate date,String startTime,String endTime, String imgURL, List<String> guests,int maxNumberOfGuests, String eventType, String admin) ;
     void deleteEvent(int id) ;
     void deleteEventsByPeriod();
-    void joinEvent(int eventId, String username);
-    void leaveEvent(int eventId, String username);
+
 
 }

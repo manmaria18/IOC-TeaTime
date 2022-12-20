@@ -32,12 +32,13 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainViewController {
 
     public Button logoutButton;
-    public Button eventPlannerButton;
+   // public Button eventPlannerButton;
     private MainController mainController;
     @FXML
     ListView<Event> eventListView;
@@ -52,6 +53,7 @@ public class MainViewController {
     @FXML
     CheckBox ByDate;
     private User currentUser;
+   // private Button join;
 
     ObservableList<Event> events = FXCollections.observableArrayList();
     private final Image IMAGE_RUBY  = new Image("https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo_64x64.png");
@@ -81,11 +83,21 @@ public class MainViewController {
                     Label date= new Label();
                     Label startTime = new Label();
                     Label endTime = new Label();
-                    Button join = new Button();
+
+                    //System.out.println();
+                    //join = new Button();
+                    Button join=new Button();
+                    System.out.println(event.getGuests());
+
+//                    if(event.getGuests().contains(currentUser.getUsername())){
+//                        join.setText("LEAVE");
+//                    }else{
+//                        join.setText("JOIN");
+//                    }
                     join.setText("JOIN");
                     join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
                     join.setId(String.valueOf(event.getId()));
-                    if(join.getText().equals("JOIN")) {
+                    if(join.getText().equals("JOIN") && !event.getGuests().contains(currentUser.getUsername())) {
                         join.setOnAction(new EventHandler() {
 
 
@@ -93,28 +105,27 @@ public class MainViewController {
                             public void handle(javafx.event.Event event) {
                                 System.out.println("Hi there! You clicked me!I am linked to event nr:" + join.getId());
                                 mainController.joinEvent(Integer.valueOf(join.getId()), currentUser.getUsername());
-                                join.setText("LEAVE");
+                                join.setStyle("-fx-background-color: silver;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
+                                join.setDisable(true);
+                                initializeEvents();
+
 
                             }
 
 
                         });
+
                     }
-                    else{
-                        join.setOnAction(new EventHandler() {
-
-
-                            @Override
-                            public void handle(javafx.event.Event event) {
-                                System.out.println("Hi there! You clicked me!I am linked to event nr:" + join.getId());
-                                mainController.leaveEvent(Integer.valueOf(join.getId()), currentUser.getUsername());
-                                join.setText("JOIN");
-
-                            }
-
-
-                        });
-                    }
+//                    else{
+//                        join.setOnAction(new EventHandler() {
+//
+//
+//
+//
+//
+//                        });
+//
+//                    }
                     title.setText("Title : " + event.getName());
                     description.setText("Description : " + event.getDescription());
                     location.setText("Location : " + event.getLocation());
@@ -194,7 +205,7 @@ public class MainViewController {
                 setGraphic(null);
             } else {
                 if (ChronoUnit.HOURS.between(LocalDateTime.now(), item.getDateTime()) < 0) {
-                    this.button.setText("Can't subscribe");
+                    this.button.setText("Can't subscribe");Guests
                     this.button.setDisable(true);
                 } else {
                     this.button.setText(btntext);
@@ -217,7 +228,9 @@ public class MainViewController {
     }
 
     private void initializeEvents() {
+        mainController.clearEventsByPeriod();
         events.setAll(mainController.getAllEvents());
+
     }
 
     public void handleLogOut(ActionEvent actionEvent) throws IOException {
@@ -236,7 +249,7 @@ public class MainViewController {
     }
 
     public void handleEventPlanner(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -246,7 +259,7 @@ public class MainViewController {
         EventController eventController = fxmlLoader.getController();
         eventController.Initialize(mainController,null,currentUser);
         stage.show();
-        Stage stage2 = (Stage) eventPlannerButton.getScene().getWindow();
+        Stage stage2 = (Stage) searchField.getScene().getWindow();
         stage2.close();
     }
 
@@ -295,7 +308,7 @@ public class MainViewController {
     }
 
     public void updateEvent(MouseEvent mouseEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -306,12 +319,12 @@ public class MainViewController {
         Event event = eventListView.getSelectionModel().getSelectedItem();
         eventController.Initialize(mainController,event,currentUser);
         stage.show();
-        Stage stage2 = (Stage) eventPlannerButton.getScene().getWindow();
+        Stage stage2 = (Stage) searchField.getScene().getWindow();
         stage2.close();
     }
 
     public void handleSwitchToEventPlanner(javafx.event.Event event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -327,7 +340,7 @@ public class MainViewController {
 
 
     public void handleSwitchToMyEvents(javafx.event.Event event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/MyEventsView.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/MyEventsView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);

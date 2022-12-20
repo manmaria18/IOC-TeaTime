@@ -3,6 +3,7 @@ package com.example.iocteatime.controller;
 import com.example.iocteatime.domain.Event;
 import com.example.iocteatime.domain.User;
 import com.example.iocteatime.service.ServiceEvents;
+import com.example.iocteatime.service.ServiceGuests;
 import com.example.iocteatime.service.ServiceUsers;
 
 import java.sql.SQLException;
@@ -14,10 +15,13 @@ public class MainController {
     private ServiceEvents serviceEvents;
     private ServiceUsers serviceUsers;
 
+    private ServiceGuests serviceGuests;
 
-    public MainController(ServiceEvents serviceEvents, ServiceUsers serviceUsers) {
+
+    public MainController(ServiceEvents serviceEvents, ServiceUsers serviceUsers, ServiceGuests serviceGuests) {
         this.serviceEvents = serviceEvents;
         this.serviceUsers = serviceUsers;
+        this.serviceGuests= serviceGuests;
     }
 
     /*     Calls to ServiceUser   */
@@ -46,11 +50,11 @@ public class MainController {
     }
 
    public void joinEvent(int eventId, String username){
-        serviceEvents.joinEvent(eventId,username);
+        serviceGuests.joinEvent(eventId,username);
     }
 
    public void leaveEvent(int eventId, String username){
-       serviceEvents.leaveEvent(eventId,username);
+       serviceGuests.leaveEvent(eventId,username);
     }
    public List<Event> getAllEventsOfAGivenUser(String username){
         return serviceEvents.getAllEventsOfAGivenUser(username);

@@ -182,6 +182,8 @@ public class RepositoryEvents implements IRepositoryEvents{
                 System.err.println("Error DB"+ex);
             }
             event.setGuests(guests);
+            System.out.println("1:\n"+guests);
+            System.out.println("2:\n"+event.getGuests());
         }
         return events;
     }
@@ -328,17 +330,25 @@ public class RepositoryEvents implements IRepositoryEvents{
     }
 
     @Override
-    public void joinEvent(int eventId, String username) {
+    public void joinEvent(Event event, User user) {
         Connection con = jdbcUtils.getConnection();
         try(PreparedStatement ps = con.prepareStatement("insert into Guests" +
                 "(username,id) values (?,?)")){
-            ps.setString(1, username);
-            ps.setInt(2,eventId);
+            ps.setString(1, user.getUsername());
+            ps.setInt(2,event.getId());
             int result = ps.executeUpdate();
         } catch (SQLException ex) {
 
             System.err.println("Error DB"+ex);
         }
+        //user.getEvents(user.getUsername()).add(event.getId());
+        List<Event> eventsOfCurrentUser= getAllEventsOfAGivenUser(user.getUsername());
+        List<Integer> eventsIdsOfCurrentUser = new ArrayList<>();
+        for(Event event1: eventsOfCurrentUser){
+            eventsIdsOfCurrentUser.add(event1.getId());
+        }
+        user.setEvents(eventsIdsOfCurrentUser);
+
     }
 
     @Override

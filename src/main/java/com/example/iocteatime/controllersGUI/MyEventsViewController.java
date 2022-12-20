@@ -73,11 +73,20 @@ public class MyEventsViewController {
                     Label date= new Label();
                     Label startTime = new Label();
                     Label endTime = new Label();
-                    //Button join = new Button();
-                   // join.setText("JOIN");
-                   // join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
-                   //join.setOnAction(new EventHandler() {
-                    //});
+                    Button join = new Button();
+                    join.setId(event.getId()+"");
+                    join.setText("LEAVE");
+                    join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
+                    join.setOnAction(new EventHandler() {
+                        @Override
+                            public void handle(javafx.event.Event event) {
+                                System.out.println("Hi there! You clicked me!I am linked to event nr:" + join.getId());
+                                mainController.leaveEvent(Integer.valueOf(join.getId()), currentUser.getUsername());
+                                initializeEvents();
+                                //join.setDisable(true);
+
+                            }
+                    });
                     title.setText("Title : " + event.getName());
                     description.setText("Description : " + event.getDescription());
                     location.setText("Location : " + event.getLocation());
@@ -103,7 +112,7 @@ public class MyEventsViewController {
                     vbox.getChildren().add(date);
                     vbox.getChildren().add(startTime);
                     vbox.getChildren().add(endTime);
-                    //vbox.getChildren().add(join);
+                    vbox.getChildren().add(join);
                     //Image newImage = new Image(event.getImgURL());
 
                     imageView.setImage(new Image(event.getImgURL()));
@@ -119,8 +128,8 @@ public class MyEventsViewController {
         events.setAll(mainController.getAllEventsOfAGivenUser(currentUser.getUsername()));
     }
 
-    public void switchToEvents(javafx.event.Event event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/MainView.fxml"));
+    public void switchToEventsView(javafx.event.Event event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MyEventsViewController.class.getResource("/com/example/iocteatime/MainView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
@@ -147,18 +156,20 @@ public class MyEventsViewController {
     }
 
 
-    public void switchToEventsView(javafx.event.Event event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("/com/example/iocteatime/MainView.fxml"));
-        Parent root1 = (Parent)fxmlLoader.load();
-        Stage stage = new Stage();
-        stage.initModality(Modality.APPLICATION_MODAL);
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.setTitle("Tea-Time!");
-        stage.setScene(new Scene(root1));
-        MyEventsViewController eventController = fxmlLoader.getController();
-        eventController.Initialise(mainController,currentUser);
-        stage.show();
-        Stage stage2 = (Stage) searchField1.getScene().getWindow();
-        stage2.close();
-    }
+
+
+//    public void switchToEventsView(javafx.event.Event event) throws IOException {
+//        FXMLLoader fxmlLoader = new FXMLLoader(MyEventsViewController.class.getResource("/com/example/iocteatime/MainView.fxml"));
+//        Parent root1 = (Parent)fxmlLoader.load();
+//        Stage stage = new Stage();
+//        stage.initModality(Modality.APPLICATION_MODAL);
+//        stage.initStyle(StageStyle.UNDECORATED);
+//        stage.setTitle("Tea-Time!");
+//        stage.setScene(new Scene(root1));
+//        MyEventsViewController eventController = fxmlLoader.getController();
+//        eventController.Initialise(mainController,currentUser);
+//        stage.show();
+//        Stage stage2 = (Stage) searchField1.getScene().getWindow();
+//        stage2.close();
+//    }
 }
