@@ -149,7 +149,23 @@ public class MyEventsViewController {
     public void refresh(ActionEvent actionEvent) {
     }
 
-    public void updateEvent(MouseEvent mouseEvent) {
+    public void updateEvent(MouseEvent mouseEvent) throws IOException, InterruptedException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MyEventsViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
+        Parent root1 = (Parent)fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("Tea-Time!");
+        stage.setScene(new Scene(root1));
+        EventController eventController = fxmlLoader.getController();
+        com.example.iocteatime.domain.Event event = eventListView1.getSelectionModel().getSelectedItem();
+        eventController.Initialize(mainController,event,currentUser);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Reminder: if you want to make a private event, remember to only then add attenders to the list!!",new ButtonType[0]);
+        alert.wait(1000);
+        stage.show();
+        alert.show();
+        Stage stage2 = (Stage) searchField1.getScene().getWindow();
+        stage2.close();
     }
 
     public void handleSwitchToEventPlanner(Event event) {

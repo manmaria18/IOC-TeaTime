@@ -80,7 +80,7 @@ public class RepositoryEvents implements IRepositoryEvents{
         List<Event> events = new ArrayList<>();
         Connection con = jdbcUtils.getConnection();
         List<String> guests  = new ArrayList<>();
-        try(PreparedStatement ps = con.prepareStatement("select * from Events")) {
+        try(PreparedStatement ps = con.prepareStatement("select * from Events where eventType='"+"Public"+"'")) {
             try (ResultSet rows = ps.executeQuery()) {
                 while (rows.next()) {
                     int id = rows.getInt("id");

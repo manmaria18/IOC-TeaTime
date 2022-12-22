@@ -34,6 +34,7 @@ public class EventController {
     public TextField maxNrOfAttendantsField;
     public ComboBox typeOfEventCombo;
     public Button eventButton2;
+    public TextArea guestsField;
     private MainController mainController;
 
     private TextField eventTypeField;
@@ -115,10 +116,10 @@ public class EventController {
     }
 
     public void handleUpdate(ActionEvent actionEvent) {
-        String title=titleField.getText();
-        String location=locationField.getText();
-        LocalDate date =dateField.getValue();
-        String url =urlField.getText();
+        String title = titleField.getText();
+        String location = locationField.getText();
+        LocalDate date = dateField.getValue();
+        String url = urlField.getText();
         String startTime = startTimeField.getText();
         String endTime = endTimeField.getText();
         String description = descriptionField.getText();
@@ -126,28 +127,34 @@ public class EventController {
         String eventType = typeOfEventCombo.getValue().toString();
         String admin = currentUser.getUsername();
         int maxNr;
-        if(eventType.equals("Public")){
-            maxNr= Integer.MAX_VALUE;
-        }else{
-            maxNr= Integer.valueOf(maxNrOfAttendantsField.getText());
+        if (eventType.equals("Public")) {
+            maxNr = Integer.MAX_VALUE;
+        } else {
+            maxNr = Integer.valueOf(maxNrOfAttendantsField.getText());
         }
         List<String> names = new ArrayList<>();
-        if(!(title.equals("")&&location.equals("")&&startTime.equals("")&&endTime.equals("")&&description.equals("")&&url.equals(""))){
-            this.mainController.updateEvent(currentEvent.getId(),title,description,location,date,startTime,endTime,url,names,maxNr,eventType,admin);
-            titleField.setText("");
-            locationField.setText("");
-            dateField.setValue(LocalDate.now());
-            urlField.setText("");
-            startTimeField.setText("");
-            endTimeField.setText("");
-            descriptionField.setText("");
-            maxNrOfAttendantsField.setText("");
-        }else {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Empty fields!", new ButtonType[0]);
+        if (currentUser.getUsername().equals(admin)) {
+            if (!(title.equals("") && location.equals("") && startTime.equals("") && endTime.equals("") && description.equals("") && url.equals(""))) {
+                this.mainController.updateEvent(currentEvent.getId(), title, description, location, date, startTime, endTime, url, names, maxNr, eventType, admin);
+                titleField.setText("");
+                locationField.setText("");
+                dateField.setValue(LocalDate.now());
+                urlField.setText("");
+                startTimeField.setText("");
+                endTimeField.setText("");
+                descriptionField.setText("");
+                maxNrOfAttendantsField.setText("");
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Empty fields!", new ButtonType[0]);
+                alert.show();
+            }
+
+            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Event successfully updated!", new ButtonType[0]);
             alert.show();
         }
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Event succesfully created!", new ButtonType[0]);
-        alert.show();
+        else{
+            Alert alert = new Alert(Alert.AlertType.WARNING, "You are not the admin of the event, you can't update it!!", new ButtonType[0]);
+            alert.show();
+        }
     }
 }

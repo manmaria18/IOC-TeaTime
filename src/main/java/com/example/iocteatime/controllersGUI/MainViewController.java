@@ -307,7 +307,7 @@ public class MainViewController {
         }
     }
 
-    public void updateEvent(MouseEvent mouseEvent) throws IOException {
+    public void updateEvent(MouseEvent mouseEvent) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
@@ -318,12 +318,15 @@ public class MainViewController {
         EventController eventController = fxmlLoader.getController();
         Event event = eventListView.getSelectionModel().getSelectedItem();
         eventController.Initialize(mainController,event,currentUser);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Reminder: if you want to make a private event, remember to only then add attenders to the list!!",new ButtonType[0]);
+        alert.wait(1000);
         stage.show();
+        alert.show();
         Stage stage2 = (Stage) searchField.getScene().getWindow();
         stage2.close();
     }
 
-    public void handleSwitchToEventPlanner(javafx.event.Event event) throws IOException {
+    public void handleSwitchToEventPlanner(javafx.event.Event event) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
@@ -333,7 +336,10 @@ public class MainViewController {
         stage.setScene(new Scene(root1));
         EventController eventController = fxmlLoader.getController();
         eventController.Initialize(mainController,null,currentUser);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION,"Reminder: if you want to make a private event, remember to only then add attenders to the list!!",new ButtonType[0]);
+        alert.wait(1000);
         stage.show();
+        alert.show();
         Stage stage2 = (Stage) searchField.getScene().getWindow();
         stage2.close();
     }
