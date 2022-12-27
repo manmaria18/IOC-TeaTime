@@ -107,8 +107,8 @@ public class MainViewController {
                                 String enteredBy ="join";
                                 mainController.joinEvent(Integer.valueOf(join.getId()), currentUser.getUsername(),enteredBy);
                                 join.setStyle("-fx-background-color: silver;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
-                                join.setDisable(true);
-                                initializeEvents();
+                                //join.setDisable(true);
+                                //initializeEvents();
 
 
                             }
@@ -231,6 +231,7 @@ public class MainViewController {
     private void initializeEvents() {
         mainController.clearEventsByPeriod();
         events.setAll(mainController.getAllEvents());
+
 
     }
 

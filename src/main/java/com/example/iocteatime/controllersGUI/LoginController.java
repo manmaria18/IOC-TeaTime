@@ -100,7 +100,14 @@ public class LoginController {
         stage.setScene(new Scene(root1));
         MainViewController mainViewController = fxmlLoader.getController();
         mainViewController.Initialise(mainController,currentUser);
+        List<String> myNotifications = mainController.getEventsNotifications(currentUser.getUsername());
+
+        System.out.println(myNotifications.toString());
         stage.show();
+        if(myNotifications.size()>0){
+            Alert alert = mainController.createNotifications(myNotifications);
+            alert.showAndWait();
+        }
         Stage stage2 = (Stage) logInButton.getScene().getWindow();
         stage2.close();
     }

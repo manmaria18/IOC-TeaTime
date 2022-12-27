@@ -439,6 +439,41 @@ public class RepositoryEvents implements IRepositoryEvents{
     }
 
     @Override
+    public List<String> getEventsNotifications(User user) {
+        Connection con = jdbcUtils.getConnection();
+        List<String> guests = new ArrayList<>();
+        List<String> goodOnes = new ArrayList<>();
+        String enteredBy = "add";
+        try(PreparedStatement ps =con.prepareStatement("select * from Guests where enteredBy='"+enteredBy+"'and username='"+user.getUsername()+"'")){
+            try(ResultSet rows = ps.executeQuery()){
+                // int i=0;
+                while(rows.next()){
+                    // eventList.get(i) = rows.getInt("id");
+                    int id = rows.getInt("id");
+                    String date = rows.getString("enteredDate");
+                    guests.add(id+" "+date);
+                }
+            }
+        }catch (SQLException ex){
+            System.err.println("Error DB"+ex);
+        }
+        //event.setGuests(guests);
+        for(String guest : guests){
+            System.out.println(guest);
+            String date = guest.split(" ")[1];
+            System.out.println(date);
+            //LocalDate good = new Date(date,formatter);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate good = LocalDate.parse(date,formatter);
+            System.out.println(user.getLastLogIn());
+            if(good.compareTo(user.getLastLogIn())<=0){
+                goodOnes.add(guest);
+            }
+        }
+        return goodOnes;
+    }
+
+    @Override
     public List<Event> getEventsByDate(String date) {
 
         List<Event> events = new ArrayList<>();

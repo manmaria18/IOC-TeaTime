@@ -19,6 +19,11 @@ public class ServiceEvents implements IServiceEvents{
     }
 
     @Override
+    public Event getEventById(int id) {
+        return repoEvents.getEventById(id);
+    }
+
+    @Override
     public List<Event> getEventsByName(String name) throws SQLException {
         return repoEvents.getEventsByName(name);
     }

@@ -31,7 +31,7 @@ public class RepositoryUser implements IRepositoryUser {
                 //while(rows.next()){
                // int id = rows.getInt("id");
                 User user1 = new User(rows.getString("username"),
-                        rows.getString("password"), eventList);
+                        rows.getString("password"), eventList,LocalDate.parse(rows.getString("lastLogIn")));
                 //employees.add(employee);
                 user=user1;
                 //}

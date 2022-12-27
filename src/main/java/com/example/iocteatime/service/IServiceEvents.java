@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface IServiceEvents {
+    Event getEventById(int id);
     List<Event> getEventsByName(String name) throws SQLException;
     List<Event> getAllEvents();
     List<Event> getAllEventsOfAGivenUser(String username);

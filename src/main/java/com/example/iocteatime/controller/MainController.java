@@ -5,6 +5,8 @@ import com.example.iocteatime.domain.User;
 import com.example.iocteatime.service.ServiceEvents;
 import com.example.iocteatime.service.ServiceGuests;
 import com.example.iocteatime.service.ServiceUsers;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -83,5 +85,25 @@ public class MainController {
     public void updateUser(User user,LocalDate lastLogIn) {
        //LocalDate lastLogIn = LocalDate.now();
        serviceUsers.updateUser(user,lastLogIn);
+    }
+
+    public List<String> getEventsNotifications(String username){
+       return serviceGuests.getEventsNotifications(username);
+    }
+
+    public Alert createNotifications(List<String> notifications){
+       String notify="";
+       for(String notif: notifications){
+
+           Event event = serviceEvents.getEventById(Integer.valueOf(notif.split(" ")[0]));
+           notify+=event.getAdmin().toUpperCase();
+           notify+=" added you to: ";
+           notify+=event.getName();
+           notify+="\n";
+       }
+       Alert alert = new Alert(Alert.AlertType.INFORMATION,notify, ButtonType.OK);
+       alert.setTitle("Notifications");
+       alert.setHeaderText("NEW PRIVATE EVENTS!");
+       return alert;
     }
 }

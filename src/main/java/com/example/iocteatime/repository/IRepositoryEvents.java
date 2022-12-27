@@ -28,4 +28,6 @@ public interface IRepositoryEvents {
     void joinEvent(Event eventId, User username, String enteredBy);
 
     void leaveEvent(int eventId, String username);
+
+    List<String> getEventsNotifications(User user);
 }
