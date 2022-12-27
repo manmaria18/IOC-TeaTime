@@ -1,5 +1,6 @@
 package com.example.iocteatime.domain;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class User {
@@ -7,12 +8,22 @@ public class User {
     private String password;
     private List<Integer> events;
 
+    private LocalDate lastLogIn;
+
     //private String status;
+
+    public User(String username, String password, List<Integer> events,LocalDate lastLogIn) {
+        this.username = username;
+        this.password = password;
+        this.events = events;
+        this.lastLogIn = lastLogIn;
+    }
 
     public User(String username, String password, List<Integer> events) {
         this.username = username;
         this.password = password;
         this.events = events;
+        //this.lastLogIn = lastLogIn;
     }
 
     public User(){
@@ -43,12 +54,25 @@ public class User {
         this.events = events;
     }
 
+    public List<Integer> getEvents() {
+        return events;
+    }
+
+    public LocalDate getLastLogIn() {
+        return lastLogIn;
+    }
+
+    public void setLastLogIn(LocalDate lastLogIn) {
+        this.lastLogIn = lastLogIn;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", events=" + events +
+                ", events=" + events + '\'' +
+                ",lastLogIn=" + lastLogIn +
                 '}';
     }
 }

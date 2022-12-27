@@ -104,7 +104,8 @@ public class MainViewController {
                             @Override
                             public void handle(javafx.event.Event event) {
                                 System.out.println("Hi there! You clicked me!I am linked to event nr:" + join.getId());
-                                mainController.joinEvent(Integer.valueOf(join.getId()), currentUser.getUsername());
+                                String enteredBy ="join";
+                                mainController.joinEvent(Integer.valueOf(join.getId()), currentUser.getUsername(),enteredBy);
                                 join.setStyle("-fx-background-color: silver;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
                                 join.setDisable(true);
                                 initializeEvents();
@@ -319,7 +320,7 @@ public class MainViewController {
         Event event = eventListView.getSelectionModel().getSelectedItem();
         eventController.Initialize(mainController,event,currentUser);
         Alert alert = new Alert(Alert.AlertType.INFORMATION,"Reminder: if you want to make a private event, remember to only then add attenders to the list!!",new ButtonType[0]);
-        alert.wait(1000);
+        //alert.wait(1000);
         stage.show();
         alert.show();
         Stage stage2 = (Stage) searchField.getScene().getWindow();
@@ -337,7 +338,7 @@ public class MainViewController {
         EventController eventController = fxmlLoader.getController();
         eventController.Initialize(mainController,null,currentUser);
         Alert alert = new Alert(Alert.AlertType.INFORMATION,"Reminder: if you want to make a private event, remember to only then add attenders to the list!!",new ButtonType[0]);
-        alert.wait(1000);
+        //alert.wait(1000);
         stage.show();
         alert.show();
         Stage stage2 = (Stage) searchField.getScene().getWindow();

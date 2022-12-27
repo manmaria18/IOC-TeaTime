@@ -16,10 +16,10 @@ public class ServiceGuests implements IServiceGuests{
     }
 
     @Override
-    public void joinEvent(int eventId, String username) {
+    public void joinEvent(int eventId, String username,String enteredBy) {
         Event event = repoEvents.getEventById(eventId);
         User user = repoUsers.getUser(username);
-        repoEvents.joinEvent(event,user);
+        repoEvents.joinEvent(event,user,enteredBy);
     }
 
     @Override

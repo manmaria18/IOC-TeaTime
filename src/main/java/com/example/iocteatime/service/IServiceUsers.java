@@ -2,6 +2,7 @@ package com.example.iocteatime.service;
 
 import com.example.iocteatime.domain.User;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IServiceUsers {
@@ -14,4 +15,5 @@ public interface IServiceUsers {
     void login();
 
 
+    void updateUser(User user,LocalDate lastLogIn);
 }

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,6 +86,8 @@ public class LoginController {
             alert = new Alert(Alert.AlertType.WARNING, "Please input your info!", new ButtonType[0]);
             alert.show();
         }
+        LocalDate lastLogIn = LocalDate.now();
+        mainController.updateUser(this.currentUser,lastLogIn);
     }
 
     public void showMainView() throws IOException {

@@ -3,6 +3,7 @@ package com.example.iocteatime.service;
 import com.example.iocteatime.domain.User;
 import com.example.iocteatime.repository.RepositoryUser;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
@@ -24,6 +25,7 @@ public class ServiceUsers implements IServiceUsers{
 
     @Override
     public void addUser(String username,String password,List<Integer> events) {
+
        User newUser = new User(username,password,events);
        repoUser.addUser(newUser);
     }
@@ -31,5 +33,10 @@ public class ServiceUsers implements IServiceUsers{
     @Override
     public void login() {
 
+    }
+
+    @Override
+    public void updateUser(User user,LocalDate lastLogIn) {
+        repoUser.updateUser(user,lastLogIn);
     }
 }

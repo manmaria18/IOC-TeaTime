@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -116,5 +117,16 @@ public class RepositoryUser implements IRepositoryUser {
     @Override
     public void logIn(User user) {
 
+    }
+
+    @Override
+    public void updateUser(User user, LocalDate lastLogIn) {
+        Connection con = jdbcUtils.getConnection();
+        try(PreparedStatement ps = con.prepareStatement("update Users set lastLogIn='" +lastLogIn + "'where username='"+user.getUsername()+"'")){
+            ps.executeUpdate();
+        } catch (SQLException ex) {
+
+            System.err.println("Error DB"+ex);
+        }
     }
 }

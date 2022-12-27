@@ -43,7 +43,7 @@ public class EventController {
     private Event currentEvent;
 
     public void Initialize(MainController mainController,Event currentEvent,User currentUser){
-        typeOfEventCombo.getItems().addAll("Private","Public");
+        typeOfEventCombo.getItems().addAll("Private","Pub");
         this.mainController  = mainController;
         this.currentEvent=currentEvent;
         this.currentUser = currentUser;
@@ -56,11 +56,14 @@ public class EventController {
             endTimeField.setText(this.currentEvent.getEndTime());
             descriptionField.setText(this.currentEvent.getDescription());
             typeOfEventCombo.setValue(this.currentEvent.getEventType());
-            if(this.currentEvent.getEventType().equals("Public")){
+            if(this.currentEvent.getEventType().equals("Pub")){
                 maxNrOfAttendantsField.setText("No limit!");
+                guestsField.setText("None");
             }else{
                 maxNrOfAttendantsField.setText(this.currentEvent.getMaxNumberOfAttenders()+"");
+                guestsField.setText(this.currentEvent.getGuests().toString());
             }
+
         }
     }
     public void handleAdd(ActionEvent actionEvent) throws IOException {
@@ -75,14 +78,22 @@ public class EventController {
         String eventType = typeOfEventCombo.getValue().toString();
         String admin = currentUser.getUsername();
         int maxNr;
-        if(eventType.equals("Public")){
+        String guests;
+        if(eventType.equals("Pub")){
             maxNr= Integer.MAX_VALUE;
+            guests="";
         }else{
             maxNr= Integer.valueOf(maxNrOfAttendantsField.getText());
+            guests= guestsField.getText();
         }
         List<String> names = new ArrayList<>();
         if(!(title.equals("")&&location.equals("")&&startTime.equals("")&&endTime.equals("")&&description.equals("")&&url.equals(""))){
+            String[] myGuests = guests.split(",");
+            for(String guest : myGuests){
+                names.add(guest);
+            }
             this.mainController.addEvent(0,title,description,location,date,startTime,endTime,url,names,maxNr,eventType,admin);
+
             titleField.setText("");
             locationField.setText("");
             dateField.setValue(LocalDate.now());
@@ -91,6 +102,7 @@ public class EventController {
             endTimeField.setText("");
             descriptionField.setText("");
             maxNrOfAttendantsField.setText("");
+            guestsField.setText("");
         }else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Empty fields!", new ButtonType[0]);
             alert.show();
@@ -126,8 +138,9 @@ public class EventController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String eventType = typeOfEventCombo.getValue().toString();
         String admin = currentUser.getUsername();
+        String guests = guestsField.getText();
         int maxNr;
-        if (eventType.equals("Public")) {
+        if (eventType.equals("Pub")) {
             maxNr = Integer.MAX_VALUE;
         } else {
             maxNr = Integer.valueOf(maxNrOfAttendantsField.getText());
@@ -135,6 +148,10 @@ public class EventController {
         List<String> names = new ArrayList<>();
         if (currentUser.getUsername().equals(admin)) {
             if (!(title.equals("") && location.equals("") && startTime.equals("") && endTime.equals("") && description.equals("") && url.equals(""))) {
+                String[] myGuests = guests.split(",");
+                for(String guest : myGuests){
+                    names.add(guest);
+                }
                 this.mainController.updateEvent(currentEvent.getId(), title, description, location, date, startTime, endTime, url, names, maxNr, eventType, admin);
                 titleField.setText("");
                 locationField.setText("");

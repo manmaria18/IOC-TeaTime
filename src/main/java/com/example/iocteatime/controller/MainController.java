@@ -8,7 +8,6 @@ import com.example.iocteatime.service.ServiceUsers;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class MainController {
@@ -49,8 +48,9 @@ public class MainController {
         return serviceEvents.getAllEvents();
     }
 
-   public void joinEvent(int eventId, String username){
-        serviceGuests.joinEvent(eventId,username);
+   public void joinEvent(int eventId, String username,String enteredBy){
+
+        serviceGuests.joinEvent(eventId,username,enteredBy);
     }
 
    public void leaveEvent(int eventId, String username){
@@ -60,7 +60,7 @@ public class MainController {
         return serviceEvents.getAllEventsOfAGivenUser(username);
     }
 
-    public void addEvent(int id, String name, String description, String location, LocalDate date,String startTime, String endTime, String imgURL, List<String> guests, int maxNumberOfAttenders, String eventType, String admin){
+    public void addEvent(int id, String name, String description, String location, LocalDate date, String startTime, String endTime, String imgURL, List<String> guests, int maxNumberOfAttenders, String eventType, String admin){
         serviceEvents.addEvent(id,name,description,location,date,startTime,endTime,imgURL,guests,maxNumberOfAttenders,eventType,admin);
     }
 
@@ -78,5 +78,10 @@ public class MainController {
 
     public List<Event> getEventsByDate(String text) {
        return serviceEvents.getEventsByDate(text);
+    }
+
+    public void updateUser(User user,LocalDate lastLogIn) {
+       //LocalDate lastLogIn = LocalDate.now();
+       serviceUsers.updateUser(user,lastLogIn);
     }
 }

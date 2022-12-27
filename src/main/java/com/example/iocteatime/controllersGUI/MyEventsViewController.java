@@ -161,7 +161,7 @@ public class MyEventsViewController {
         com.example.iocteatime.domain.Event event = eventListView1.getSelectionModel().getSelectedItem();
         eventController.Initialize(mainController,event,currentUser);
         Alert alert = new Alert(Alert.AlertType.INFORMATION,"Reminder: if you want to make a private event, remember to only then add attenders to the list!!",new ButtonType[0]);
-        alert.wait(1000);
+        //alert.wait(1000);
         stage.show();
         alert.show();
         Stage stage2 = (Stage) searchField1.getScene().getWindow();
