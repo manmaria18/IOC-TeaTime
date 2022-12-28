@@ -7,6 +7,7 @@ import com.example.iocteatime.repository.RepositoryEvents;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceEvents implements IServiceEvents{
@@ -31,6 +32,36 @@ public class ServiceEvents implements IServiceEvents{
     @Override
     public List<Event> getAllEvents() {
         return repoEvents.getAllEvents();
+    }
+
+    @Override
+    public List<Event> getAllEventsOfOwner(String username) {
+        List<Event> newList = new ArrayList<>();
+        List<Event> oldList = repoEvents.getAllEvents();
+        for(Event event:oldList){
+            if(event.getAdmin().equals(username)){
+                newList.add(event);
+            }
+        }
+        oldList = repoEvents.getAllEventsPrivate();
+        for(Event event:oldList){
+            if(event.getAdmin().equals(username)){
+                newList.add(event);
+            }
+        }
+        return newList;
+    }
+
+    @Override
+    public List<Event> getAllEventsWhereYouAreNotAdded(String username) {
+        List<Event> newList = new ArrayList<>();
+        List<Event> oldList = repoEvents.getAllEvents();
+        for(Event event:oldList){
+            if((!event.getGuests().contains(username))&&(event.getEventType().equals("Pub"))){
+                newList.add(event);
+            }
+        }
+        return newList;
     }
 
     @Override

@@ -79,7 +79,6 @@ public class RepositoryEvents implements IRepositoryEvents{
         //
         List<Event> events = new ArrayList<>();
         Connection con = jdbcUtils.getConnection();
-        List<String> guests  = new ArrayList<>();
         String eventType = "Pub";
         try(PreparedStatement ps = con.prepareStatement("select * from Events where eventType='"+eventType+"'")) {
             try (ResultSet rows = ps.executeQuery()) {
@@ -97,7 +96,7 @@ public class RepositoryEvents implements IRepositoryEvents{
                     String startTime = splittedDateTime[1];
                     String endTime = splittedDateTime[2];
                     Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
-                            rows.getString("description"),rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), guests,rows.getInt("maxNumberOfAttenders"),rows.getString("eventType"),rows.getString("admin"));
+                            rows.getString("description"),rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), new ArrayList<String>(),rows.getInt("maxNumberOfAttenders"),rows.getString("eventType"),rows.getString("admin"));
                     //employees.add(employee);
                     events.add(event1);
                     //}
@@ -108,6 +107,57 @@ public class RepositoryEvents implements IRepositoryEvents{
             System.err.println("Error DB"+ex);
         }
         for(Event event : events){
+            List<String> guests  = new ArrayList<>();
+            try(PreparedStatement ps =con.prepareStatement("select username from Guests where id='"+event.getId()+"'")){
+                try(ResultSet rows = ps.executeQuery()){
+                    // int i=0;
+                    while(rows.next()){
+                        // eventList.get(i) = rows.getInt("id");
+                        String username = rows.getString("username");
+                        guests.add(username);
+                    }
+                }
+            }catch (SQLException ex){
+                System.err.println("Error DB"+ex);
+            }
+            event.setGuests(guests);
+        }
+        return events;
+    }
+
+    @Override
+    public List<Event> getAllEventsPrivate() {
+        List<Event> events = new ArrayList<>();
+        Connection con = jdbcUtils.getConnection();
+        String eventType = "Private";
+        try(PreparedStatement ps = con.prepareStatement("select * from Events where eventType='"+eventType+"'")) {
+            try (ResultSet rows = ps.executeQuery()) {
+                while (rows.next()) {
+                    int id = rows.getInt("id");
+
+                    //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+                    //LocalDateTime dateTime = LocalDateTime.parse(time,formatter);
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+                    String time = rows.getString("dateTime");
+                    //LocalDateTime dateTime = LocalDateTime.parse(rows.getString("dateTime"),formatter);
+                    String[] splittedDateTime= time.split(" ");
+                    String dateAsString = splittedDateTime[0];
+                    LocalDate date = LocalDate.parse(dateAsString,formatter);
+                    String startTime = splittedDateTime[1];
+                    String endTime = splittedDateTime[2];
+                    Event event1 = new Event(rows.getInt("id"), rows.getString("name"),
+                            rows.getString("description"),rows.getString("location"),date,startTime,endTime, rows.getString("imgURL"), new ArrayList<String>(),rows.getInt("maxNumberOfAttenders"),rows.getString("eventType"),rows.getString("admin"));
+                    //employees.add(employee);
+                    events.add(event1);
+                    //}
+                }
+            }
+        }catch (SQLException ex) {
+
+            System.err.println("Error DB"+ex);
+        }
+        for(Event event : events){
+            List<String> guests  = new ArrayList<>();
             try(PreparedStatement ps =con.prepareStatement("select username from Guests where id='"+event.getId()+"'")){
                 try(ResultSet rows = ps.executeQuery()){
                     // int i=0;
@@ -286,8 +336,8 @@ public class RepositoryEvents implements IRepositoryEvents{
                  event.getStartTime() + " " + event.getEndTime() +"', imgURL='"+event.getImgURL()+
                 "', maxNumberOfAttenders='"+event.getMaxNumberOfAttenders()+ " " +
                 "', eventType='"+event.getEventType()+ " " +
-                "', admin='"+event.getAdmin()+ " " +
-                "'where id='"+event.getId()+"'")){
+                "', admin='"+event.getAdmin()+ "" +
+                "' where id='"+event.getId()+"'")){
                 ps.executeUpdate();
         } catch (SQLException ex) {
 

@@ -122,6 +122,7 @@ public class EventController {
         stage.setScene(new Scene(root1));
         MainViewController mainViewController = fxmlLoader.getController();
         mainViewController.Initialise(mainController,currentUser);
+        mainViewController.init();
         stage.show();
         Stage stage2 = (Stage) backButton.getScene().getWindow();
         stage2.close();

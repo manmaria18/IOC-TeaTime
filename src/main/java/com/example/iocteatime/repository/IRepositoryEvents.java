@@ -10,6 +10,7 @@ public interface IRepositoryEvents {
     List<Event> getEventsByName(String name) throws SQLException;
 
     List<Event> getAllEvents();
+    List<Event> getAllEventsPrivate();
 
     List<Event> getAllEventsOfAGivenUser(String username);
 

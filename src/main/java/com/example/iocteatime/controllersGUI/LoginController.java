@@ -39,7 +39,7 @@ public class LoginController {
     @FXML
     private ImageView imagine= new ImageView();
 
-    Image img = new Image("C:\\Users\\manma\\IdeaProjects\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\Images\\tea_time_alice.jpeg");
+    Image img = new Image("C:\\IOC-TeaTime\\src\\main\\resources\\com\\example\\iocteatime\\Images\\tea_time_alice.jpeg");
 
     private User currentUser;
     public LoginController() {

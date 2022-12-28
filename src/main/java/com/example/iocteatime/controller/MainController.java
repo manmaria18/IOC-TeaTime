@@ -74,6 +74,13 @@ public class MainController {
 
     }
 
+    public List<Event> getAllEventsWhereYouAreNotAdded(String username){
+       return serviceEvents.getAllEventsWhereYouAreNotAdded(username);
+    }
+    public List<Event> getAllEventsOfOwner(String username) {
+       return serviceEvents.getAllEventsOfOwner(username);
+    }
+
     public void clearEventsByPeriod(){
        serviceEvents.deleteEventsByPeriod();
     }

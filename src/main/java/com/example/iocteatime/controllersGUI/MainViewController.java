@@ -38,11 +38,24 @@ import java.util.List;
 public class MainViewController {
 
     public Button logoutButton;
-   // public Button eventPlannerButton;
+    public TextField searchField1;
+    public Button searchButton1;
+    public CheckBox ByName1;
+    public CheckBox ByDate1;
+    public TextField searchField2;
+    public Button searchButton2;
+    //public ListView<Event> myEventListView;
+    public CheckBox ByName2;
+    public CheckBox ByDate2;
+    @FXML
+    ListView<Event> eventListView2;
+    public Button addEventButton;
+    // public Button eventPlannerButton;
     private MainController mainController;
     @FXML
     ListView<Event> eventListView;
-
+    @FXML
+    ListView<Event> eventListView1;
     @FXML
     TextField searchField;
     @FXML
@@ -55,184 +68,130 @@ public class MainViewController {
     private User currentUser;
    // private Button join;
 
+    ObservableList<Event> myEvents = FXCollections.observableArrayList();
     ObservableList<Event> events = FXCollections.observableArrayList();
+    ObservableList<Event> createdEvents = FXCollections.observableArrayList();
     private final Image IMAGE_RUBY  = new Image("https://upload.wikimedia.org/wikipedia/commons/f/f1/Ruby_logo_64x64.png");
     public void Initialise(MainController mainController,User currentUser){
         this.mainController = mainController;
         this.currentUser = currentUser;
         initializeEvents();
-        eventListView.setItems(events);
-        eventListView.setCellFactory(param -> new ListCell<Event>() {
-            private ImageView imageView = new ImageView();
-            @Override
-            public void updateItem(Event event, boolean empty) {
-                super.updateItem(event, empty);
-                if (empty) {
-                    setText(null);
-                    setGraphic(null);
-                } else {
-                    HBox hBox = new HBox();
-                    hBox.setAlignment(Pos.CENTER);
-                    hBox.setStyle("-fx-background-color:  #97a7fc;"+"-fx-max-height: 50;");
-                    hBox.setSpacing(5);
-                    hBox.setPadding(new Insets(5,5,5,5));
-                    VBox vbox = new VBox();
-                    Label title = new Label();
-                    Label description= new Label();
-                    Label location= new Label();
-                    Label date= new Label();
-                    Label startTime = new Label();
-                    Label endTime = new Label();
 
-                    //System.out.println();
-                    //join = new Button();
-                    Button join=new Button();
-                    System.out.println(event.getGuests());
-
-//                    if(event.getGuests().contains(currentUser.getUsername())){
-//                        join.setText("LEAVE");
-//                    }else{
-//                        join.setText("JOIN");
-//                    }
-                    join.setText("JOIN");
-                    join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
-                    join.setId(String.valueOf(event.getId()));
-                    if(join.getText().equals("JOIN") && !event.getGuests().contains(currentUser.getUsername())) {
-                        join.setOnAction(new EventHandler() {
-
-
-                            @Override
-                            public void handle(javafx.event.Event event) {
-                                System.out.println("Hi there! You clicked me!I am linked to event nr:" + join.getId());
-                                String enteredBy ="join";
-                                mainController.joinEvent(Integer.valueOf(join.getId()), currentUser.getUsername(),enteredBy);
-                                join.setStyle("-fx-background-color: silver;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
-                                //join.setDisable(true);
-                                //initializeEvents();
-
-
-                            }
-
-
-                        });
-
-                    }
-//                    else{
-//                        join.setOnAction(new EventHandler() {
-//
-//
-//
-//
-//
-//                        });
-//
-//                    }
-                    title.setText("Title : " + event.getName());
-                    description.setText("Description : " + event.getDescription());
-                    location.setText("Location : " + event.getLocation());
-                    date.setText("Date: " + event.getDate());
-                    startTime.setText("Starts at:" + event.getStartTime());
-                    endTime.setText("Ends at:" + event.getEndTime());
-
-                    //////////
-                    hBox.setPadding(new Insets(5));
-                    title.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 20");
-                    description.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
-                    location.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
-                    date.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
-                    startTime.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
-                    endTime.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
-                    //////
-
-                    hBox.getChildren().add(vbox);
-                    hBox.getChildren().add(imageView);
-                    vbox.getChildren().add(title);
-                    vbox.getChildren().add(description);
-                    vbox.getChildren().add(location);
-                    vbox.getChildren().add(date);
-                    vbox.getChildren().add(startTime);
-                    vbox.getChildren().add(endTime);
-                    vbox.getChildren().add(join);
-                    //Image newImage = new Image(event.getImgURL());
-
-                    imageView.setImage(new Image(event.getImgURL()));
-                    imageView.setFitHeight(150.0);
-                    imageView.setFitWidth(250.0);
-                    setGraphic(hBox);
-                }
-            }
-        });
     }
 
-    ///////////////
-/*
     class XCell extends ListCell<Event> {
-        HBox hbox = new HBox();
-        Label label = new Label("");
-        Pane pane = new Pane();
-        Button button = new Button("");
-        String btntext;
-
-        public XCell(String buttonText, String style) {
+        private ImageView imageView2 = new ImageView();
+        HBox hBox = new HBox();
+        VBox vbox = new VBox();
+        Label title = new Label();
+        Label description = new Label();
+        Label location = new Label();
+        Label date = new Label();
+        Label startTime = new Label();
+        Label endTime = new Label();
+        Button join = new Button();
+        public XCell(String buttonName) {
             super();
-            btntext = buttonText;
-            button.setText(buttonText);
-            button.setStyle(style);
-            hbox.setStyle("-fx-alignment: center");
-            hbox.getChildren().addAll(label, pane, button);
-            label.setStyle("-fx-text-fill: #2196f3;");
-            HBox.setHgrow(pane, Priority.ALWAYS);
-            button.setOnAction(e -> {
-                if (buttonText.equals("Join")) {
+            hBox.setAlignment(Pos.CENTER);
+            hBox.setStyle("-fx-background-color:  #97a7fc;" + "-fx-max-height: 50;");
+            hBox.setSpacing(5);
+            hBox.setPadding(new Insets(5, 5, 5, 5));
+            join.setText(buttonName);
+            hBox.getChildren().add(vbox);
+            hBox.getChildren().add(imageView2);
+            vbox.getChildren().add(title);
+            vbox.getChildren().add(description);
+            vbox.getChildren().add(location);
+            vbox.getChildren().add(date);
+            vbox.getChildren().add(startTime);
+            vbox.getChildren().add(endTime);
+            vbox.getChildren().add(join);
+            join.setStyle("-fx-background-color: gold;" + "-fx-background-radius: 80;" + "-fx-border-radius:80;" + "-fx-border-color: #000031");
+            join.setOnAction(e->{
+                Event event = getListView().getItems().get(getIndex());
 
-                    Event selected = getListView().getItems().get(getIndex());
-                    mainController.joinEvent(selected,currentUser);
-                    updateItem(selected, false);
-
-                } else {
-                    Event selected = getListView().getItems().get(getIndex());
-                    mainController.leaveEvent(selected,currentUser);
-                    updateItem(selected, false);
+                if(buttonName.equals("JOIN")){
+                    mainController.joinEvent(event.getId(), currentUser.getUsername(),"join");
+                    init();
+                    updateItem(event,false);
+                }
+                if(buttonName.equals("LEAVE")){
+                    mainController.leaveEvent(event.getId(), currentUser.getUsername());
+                    init();
+                    updateItem(event,false);
+                }
+                if (buttonName.equals("UPDATE")){
+                    FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
+                    Parent root1 = null;
+                    try {
+                        root1 = (Parent)fxmlLoader.load();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.setTitle("Tea-Time!");
+                    stage.setScene(new Scene(root1));
+                    EventController eventController = fxmlLoader.getController();
+                    eventController.Initialize(mainController,event,currentUser);
+                    stage.show();
+                    Stage stage2 = (Stage) addEventButton.getScene().getWindow();
+                    updateItem(event,false);
+                    stage2.close();
+                    init();
                 }
             });
-
         }
 
         @Override
-        protected void updateItem(Event item, boolean empty) {
-            super.updateItem(item, empty);
-            setText(null);
+        protected void updateItem(Event event, boolean empty) {
+            super.updateItem(event, empty);
             if (empty) {
+                setText(null);
                 setGraphic(null);
             } else {
-                if (ChronoUnit.HOURS.between(LocalDateTime.now(), item.getDateTime()) < 0) {
-                    this.button.setText("Can't subscribe");Guests
-                    this.button.setDisable(true);
-                } else {
-                    this.button.setText(btntext);
-                    this.button.setDisable(false);
-                }
-                label.setText(item != null ? item.toString() : "<null>");
-                setGraphic(hbox);
+                title.setText("Title : " + event.getName());
+                description.setText("Description : " + event.getDescription());
+                location.setText("Location : " + event.getLocation());
+                date.setText("Date: " + event.getDate());
+                startTime.setText("Starts at:" + event.getStartTime());
+                endTime.setText("Ends at:" + event.getEndTime());
 
+                //////////
+                hBox.setPadding(new Insets(5));
+                title.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 20");
+                description.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 15");
+                location.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 15");
+                date.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 15");
+                startTime.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 15");
+                endTime.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 15");
+                imageView2.setImage(new Image(event.getImgURL()));
+                imageView2.setFitHeight(150.0);
+                imageView2.setFitWidth(250.0);
+                setGraphic(hBox);
             }
         }
     }
-*/
-    ///////////////
 
 
-
-    private void onJoinClick() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION,"JOIN TRIED",ButtonType.OK);
-        alert.show();
+    public void init(){
+        events.setAll(mainController.getAllEventsWhereYouAreNotAdded(currentUser.getUsername()));
+        myEvents.setAll(mainController.getAllEventsOfAGivenUser(currentUser.getUsername()));
+        createdEvents.setAll(mainController.getAllEventsOfOwner(currentUser.getUsername()));
     }
-
     private void initializeEvents() {
         mainController.clearEventsByPeriod();
-        events.setAll(mainController.getAllEvents());
-
-
+        init();
+        eventListView.setCellFactory(param -> new XCell("JOIN"));
+        eventListView1.setCellFactory(param -> new XCell("LEAVE"));
+        eventListView2.setCellFactory(param -> new XCell("UPDATE"));
+    }
+    @FXML
+    public void initialize(){
+        eventListView.setItems(events);
+        eventListView1.setItems(myEvents);
+        eventListView2.setItems(createdEvents);
     }
 
     public void handleLogOut(ActionEvent actionEvent) throws IOException {
@@ -298,9 +257,101 @@ public class MainViewController {
         }
     }
 
+    public void handleSearchButtonClick1(ActionEvent actionEvent) throws SQLException {
+        if (ByName1.isSelected()) {
+            if (!searchField1.getText().equals("")) {
+                List<Event> eventsByName = mainController.getEventsByName(searchField1.getText());
+                if (eventsByName.size() != 0)
+                    myEvents.setAll(eventsByName);
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "No results found!", ButtonType.OK);
+                    alert.show();
+                    myEvents.setAll(mainController.getAllEvents());
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please insert value for search!", ButtonType.OK);
+                alert.show();
+            }
+        }
+        else if(ByDate1.isSelected()){
+            if (!searchField1.getText().equals("")) {
+                List<Event> eventsByName = mainController.getEventsByDate(searchField1.getText());
+                if (eventsByName.size() != 0)
+                    myEvents.setAll(eventsByName);
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "No results found!", ButtonType.OK);
+                    alert.show();
+                    myEvents.setAll(mainController.getAllEvents());
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please insert value for search!", ButtonType.OK);
+                alert.show();
+            }
+        }
+    }
 
 
+    public void handleSearchButtonClick2(ActionEvent actionEvent) throws SQLException {
+        if (ByName2.isSelected()) {
+            if (!searchField2.getText().equals("")) {
+                List<Event> eventsByName = mainController.getEventsByName(searchField1.getText());
+                if (eventsByName.size() != 0)
+                    createdEvents.setAll(eventsByName);
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "No results found!", ButtonType.OK);
+                    alert.show();
+                    createdEvents.setAll(mainController.getAllEvents());
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please insert value for search!", ButtonType.OK);
+                alert.show();
+            }
+        }
+        else if(ByDate2.isSelected()){
+            if (!searchField2.getText().equals("")) {
+                List<Event> eventsByName = mainController.getEventsByDate(searchField1.getText());
+                if (eventsByName.size() != 0)
+                    createdEvents.setAll(eventsByName);
+                else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "No results found!", ButtonType.OK);
+                    alert.show();
+                    createdEvents.setAll(mainController.getAllEvents());
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Please insert value for search!", ButtonType.OK);
+                alert.show();
+            }
+        }
+    }
 
+    public void addEventButtonClick(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
+        Parent root1 = (Parent)fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setTitle("Tea-Time!");
+        stage.setScene(new Scene(root1));
+        EventController eventController = fxmlLoader.getController();
+        eventController.Initialize(mainController,null,currentUser);
+        stage.show();
+        Stage stage2 = (Stage) addEventButton.getScene().getWindow();
+        stage2.close();
+    }
+
+    public void refresh2(ActionEvent actionEvent) {
+        if(!ByName2.isSelected() && !ByDate2.isSelected()){
+            List<Event> refreshList = mainController.getAllEvents();
+            createdEvents.setAll(refreshList);
+        }
+    }
+
+    public void refresh1(ActionEvent actionEvent) {
+        if(!ByName1.isSelected() && !ByDate1.isSelected()){
+            List<Event> refreshList = mainController.getAllEvents();
+            myEvents.setAll(refreshList);
+        }
+    }
 
     public void refresh(ActionEvent actionEvent) {
         if(!ByName.isSelected() && !ByDate.isSelected()){
@@ -309,7 +360,7 @@ public class MainViewController {
         }
     }
 
-    public void updateEvent(MouseEvent mouseEvent) throws IOException, InterruptedException {
+    /*public void updateEvent(MouseEvent mouseEvent) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
@@ -326,9 +377,9 @@ public class MainViewController {
         alert.show();
         Stage stage2 = (Stage) searchField.getScene().getWindow();
         stage2.close();
-    }
+    }*/
 
-    public void handleSwitchToEventPlanner(javafx.event.Event event) throws IOException, InterruptedException {
+    /*public void handleSwitchToEventPlanner(javafx.event.Event event) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(MainViewController.class.getResource("/com/example/iocteatime/EventPlannerView.fxml"));
         Parent root1 = (Parent)fxmlLoader.load();
         Stage stage = new Stage();
@@ -360,7 +411,7 @@ public class MainViewController {
         stage.show();
         Stage stage2 = (Stage) searchField.getScene().getWindow();
         stage2.close();
-    }
+    }*/
 }
 
 
