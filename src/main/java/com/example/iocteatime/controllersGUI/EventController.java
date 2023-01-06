@@ -61,7 +61,7 @@ public class EventController {
                 guestsField.setText("None");
             }else{
                 maxNrOfAttendantsField.setText(this.currentEvent.getMaxNumberOfAttenders()+"");
-                guestsField.setText(this.currentEvent.getGuests().toString());
+                guestsField.setText(this.currentEvent.getGuests().toString().replace("[","").replace("]","").replace(" ",""));
             }
 
         }

@@ -31,7 +31,7 @@ public class HelloApplication extends Application {
         Properties props = new Properties();
 
         try {
-            props.load(new FileReader(aygeanBdConfigPath));
+            props.load(new FileReader(mariaBdConfigPath));
         } catch (Exception var13) {
             System.out.println(var13);
         }

@@ -458,11 +458,13 @@ public class RepositoryEvents implements IRepositoryEvents{
     @Override
     public void joinEvent(Event event, User user,String enteredBy) {
         Connection con = jdbcUtils.getConnection();
+        LocalDate enteredDate = LocalDate.now();
         try(PreparedStatement ps = con.prepareStatement("insert into Guests" +
-                "(username,id,enteredBy) values (?,?,?)")){
+                "(username,id,enteredBy,enteredDate) values (?,?,?,?)")){
             ps.setString(1, user.getUsername());
             ps.setInt(2,event.getId());
             ps.setString(3,enteredBy);
+            ps.setString(4,enteredDate.toString());
             int result = ps.executeUpdate();
         } catch (SQLException ex) {
 
