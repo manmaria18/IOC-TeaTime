@@ -89,6 +89,7 @@ public class MainViewController {
         Label date = new Label();
         Label startTime = new Label();
         Label endTime = new Label();
+        Label admin = new Label();
         Button join = new Button();
         public XCell(String buttonName) {
             super();
@@ -100,6 +101,7 @@ public class MainViewController {
             hBox.getChildren().add(vbox);
             hBox.getChildren().add(imageView2);
             vbox.getChildren().add(title);
+            vbox.getChildren().add(admin);
             vbox.getChildren().add(description);
             vbox.getChildren().add(location);
             vbox.getChildren().add(date);
@@ -152,6 +154,7 @@ public class MainViewController {
                 setGraphic(null);
             } else {
                 title.setText("Title : " + event.getName());
+                admin.setText("Created by: " + event.getAdmin());
                 description.setText("Description : " + event.getDescription());
                 location.setText("Location : " + event.getLocation());
                 date.setText("Date: " + event.getDate());
@@ -161,6 +164,7 @@ public class MainViewController {
                 //////////
                 hBox.setPadding(new Insets(5));
                 title.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 20");
+                admin.setStyle("-fx-text-fill: #741AAC;" + "-fx-font-size: 18");
                 description.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 15");
                 location.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 15");
                 date.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 15");

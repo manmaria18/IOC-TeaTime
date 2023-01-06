@@ -73,6 +73,7 @@ public class MyEventsViewController {
                     Label date= new Label();
                     Label startTime = new Label();
                     Label endTime = new Label();
+                    Label admin = new Label();
                     Button join = new Button();
                     join.setId(event.getId()+"");
                     join.setText("LEAVE");
@@ -88,6 +89,7 @@ public class MyEventsViewController {
                             }
                     });
                     title.setText("Title : " + event.getName());
+                    admin.setText("Created by: " + event.getAdmin());
                     description.setText("Description : " + event.getDescription());
                     location.setText("Location : " + event.getLocation());
                     date.setText("Date: " + event.getDate());
@@ -97,6 +99,7 @@ public class MyEventsViewController {
                     //////////
                     hBox.setPadding(new Insets(5));
                     title.setStyle("-fx-text-fill: #000031;" + "-fx-font-size: 20");
+                    admin.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
                     description.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
                     location.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
                     date.setStyle("-fx-text-fill: #000031;"+ "-fx-font-size: 15");
@@ -107,6 +110,7 @@ public class MyEventsViewController {
                     hBox.getChildren().add(vbox);
                     hBox.getChildren().add(imageView);
                     vbox.getChildren().add(title);
+                    vbox.getChildren().add(admin);
                     vbox.getChildren().add(description);
                     vbox.getChildren().add(location);
                     vbox.getChildren().add(date);
