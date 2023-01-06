@@ -334,9 +334,9 @@ public class RepositoryEvents implements IRepositoryEvents{
                 "', description='" +event.getDescription()+
                 "', location='" +event.getLocation()+"', dateTime='"+event.getDate()+ " " +
                  event.getStartTime() + " " + event.getEndTime() +"', imgURL='"+event.getImgURL()+
-                "', maxNumberOfAttenders='"+event.getMaxNumberOfAttenders()+ " " +
-                "', eventType='"+event.getEventType()+ " " +
-                "', admin='"+event.getAdmin()+ "" +
+                "', maxNumberOfAttenders='"+event.getMaxNumberOfAttenders()+
+                "', eventType='"+event.getEventType()+
+                "', admin='"+event.getAdmin() +
                 "' where id='"+event.getId()+"'")){
                 ps.executeUpdate();
         } catch (SQLException ex) {
